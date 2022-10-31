@@ -31,6 +31,20 @@ Route::prefix('teacher')->group(function () {
 
         //logout
         Route::post('/logout', [App\Http\Controllers\Api\Teacher\LoginController::class, 'logout', ['as' => 'teacher']]);
+
+        //kelas
+        Route::apiResource('/kelas', App\Http\Controllers\Api\Teacher\KelasController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
+        
+        //topik
+        Route::apiResource('/topiks', App\Http\Controllers\Api\Teacher\TopikController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
+        
+        //materi
+        Route::apiResource('/materis', App\Http\Controllers\Api\Teacher\MateriController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
+    
+        //video
+        Route::apiResource('/videos', App\Http\Controllers\Api\Teacher\VideoController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
+    
+    
     
     });
 
@@ -56,6 +70,18 @@ Route::prefix('student')->group(function () {
 
         //logout
         Route::post('/logout', [App\Http\Controllers\Api\Student\LoginController::class, 'logout'], ['as' => 'student']);
+        
+        //kelas    
+        Route::get('/kelas', [App\Http\Controllers\Api\Student\KelasController::class, 'index'], ['as' => 'student']);
+        
+        //topik
+        Route::get('/topiks', [App\Http\Controllers\Api\Student\TopikController::class, 'index'], ['as' => 'student']);
+
+        //materi 
+        Route::get('/materis', [App\Http\Controllers\Api\Student\MateriController::class, 'index'], ['as' => 'student']);
+        
+        //video
+        Route::get('/videos', [App\Http\Controllers\Api\Student\VideoController::class, 'index'], ['as' => 'student']);
     });
 
 });
