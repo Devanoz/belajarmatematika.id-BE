@@ -44,6 +44,15 @@ Route::prefix('teacher')->group(function () {
         //video
         Route::apiResource('/videos', App\Http\Controllers\Api\Teacher\VideoController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
     
+        //challenge
+        Route::apiResource('/challenges', App\Http\Controllers\Api\Teacher\ChallengeController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
+    
+        //question
+        Route::apiResource('/questions', App\Http\Controllers\Api\Teacher\QuestionController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
+    
+        //option
+        Route::apiResource('/options', App\Http\Controllers\Api\Teacher\OptionController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
+    
     
     
     });
@@ -70,6 +79,9 @@ Route::prefix('student')->group(function () {
 
         //logout
         Route::post('/logout', [App\Http\Controllers\Api\Student\LoginController::class, 'logout'], ['as' => 'student']);
+
+        //profile
+        Route::put('/profile', [App\Http\Controllers\Api\Student\ProfileController::class, 'update'], ['as' => 'student']);
         
         //kelas    
         Route::get('/kelas', [App\Http\Controllers\Api\Student\KelasController::class, 'index'], ['as' => 'student']);
@@ -82,6 +94,16 @@ Route::prefix('student')->group(function () {
         
         //video
         Route::get('/videos', [App\Http\Controllers\Api\Student\VideoController::class, 'index'], ['as' => 'student']);
+    
+        //challenge
+        Route::get('/challenges', [App\Http\Controllers\Api\Student\ChallengeController::class, 'index'], ['as' => 'student']);
+    
+        //question
+        Route::get('/questions', [App\Http\Controllers\Api\Student\QuestionController::class, 'index'], ['as' => 'student']);
+    
+        //scoreboard
+        Route::get('/scoreboards', [App\Http\Controllers\Api\Student\ScoreBoardController::class, 'index'], ['as' => 'student']);
+    
     });
 
 });

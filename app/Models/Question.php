@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Question extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['title', 'slug', 'image_url', 'answer_key', 'challenge_id'];
+
+    public function options(){
+        return $this->hasMany(Option::class);
+    }
 }

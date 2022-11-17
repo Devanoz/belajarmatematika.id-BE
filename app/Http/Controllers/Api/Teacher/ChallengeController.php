@@ -37,8 +37,7 @@ class ChallengeController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title'     => 'required|unique:challenges',
-            'url'       => 'required|unique:challenges',
-            'materi_id' => 'required',
+            'materi_id' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -48,8 +47,7 @@ class ChallengeController extends Controller
         //create Challenge
         $challenge = Challenge::create([
             'title' => $request->title,
-            'slug' => Str::slug($request->title, '-'),
-            'url' => $request->url,
+            'slug'  => Str::slug($request->title, '-'),
             'materi_id' => $request->materi_id,
         ]);
 
@@ -92,7 +90,6 @@ class ChallengeController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title'     => 'required|unique:challenges,title,'.$challenge->id,
-            'url'       => 'required|unique:challenges,url,'.$challenge->id,
             'materi_id' => 'required',
         ]);
 
@@ -104,7 +101,6 @@ class ChallengeController extends Controller
         $challenge->update([
             'title' => $request->title,
             'slug' => Str::slug($request->title, '-'),
-            'url' => $request->url,
             'materi_id' => $request->materi_id,
         ]);
 

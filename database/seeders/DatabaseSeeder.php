@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -25,8 +26,23 @@ class DatabaseSeeder extends Seeder
 
         //Students
         DB::table('students')->insert([
-            'name' => 'Student',
-            'email' => 'student@gmail.com',
+            'name' => 'Student1',
+            'slug' => Str::slug('Student1', '-'),
+            'email' => 'student1@gmail.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        DB::table('students')->insert([
+            'name' => 'Student2',
+            'slug' => Str::slug('Student2', '-'),
+            'email' => 'student2@gmail.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        DB::table('students')->insert([
+            'name' => 'Student3',
+            'slug' => Str::slug('Student3', '-'),
+            'email' => 'student3@gmail.com',
             'password' => Hash::make('password'),
         ]);
 
@@ -114,5 +130,39 @@ class DatabaseSeeder extends Seeder
             'url' => 'https://www.youtube.com/watch?v=ZWP4qyZPRE4',
             'materi_id' => 3,
         ]);
+
+        //Challenges
+        DB::table('challenges')->insert([
+            'title' => 'Volume Kerucut',
+            'slug' => Str::slug('Volume Kerucut', '-'),
+            'materi_id' => 1,
+        ]);
+
+        DB::table('challenges')->insert([
+            'title' => 'Volume Bola',
+            'slug' => Str::slug('Volume Bola', '-'),
+            'materi_id' => 1,
+        ]);
+
+        DB::table('challenges')->insert([
+            'title' => 'Volume Limas',
+            'slug' => Str::slug('Volume Limas', '-'),
+            'materi_id' => 1,
+        ]);
+
+        //StudentChallenges
+        for($i = 1; $i <= 3; $i++) {
+            for ($j = 1; $j <= 3; $j++) {
+                DB::table('student_challenges')->insert([
+                    'student_id'    => $i,
+                    'challenge_id'  => $j,
+                    'score' => $i * $j * 10
+                ]);
+            }
+        }
+
+        
+        
+
     }
 }

@@ -17,7 +17,7 @@ class Student extends Authenticatable implements JWTSubject
      *
      * @var string[]
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['name', 'slug', 'email', 'password', 'image_url'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -53,5 +53,9 @@ class Student extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function studentChallenges(){
+        return $this->hasMany(StudentChallenge::class);
     }
 }

@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('challenges', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('slug');
             $table->unsignedBigInteger('materi_id');
             $table->timestamps();
 

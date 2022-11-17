@@ -36,8 +36,6 @@ class RegisterController extends Controller
             'password'  => Hash::make($request->password)
         ]);
 
-        echo"adcaad";
-
         if($student) {
             //return with Api Resource
             return new StudentResource(true, 'Register Student Berhasil', $student);
@@ -45,6 +43,5 @@ class RegisterController extends Controller
 
         //return failed with Api Resource
         return new StudentResource(false, 'Register Student Gagal!', null);
-
     }
 }
