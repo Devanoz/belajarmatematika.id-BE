@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
-            $table->string('image_url')->nullable();
+            $table->string('image')->nullable();
             $table->string('answer_key');
             $table->unsignedBigInteger('challenge_id');
             $table->timestamps();

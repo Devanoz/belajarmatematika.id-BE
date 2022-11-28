@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Student;
 
 use App\Models\Student;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -10,7 +11,7 @@ use App\Http\Resources\StudentResource;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
-{    
+{
     /**
      * store
      *
@@ -20,8 +21,8 @@ class RegisterController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|email|unique:students',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:students',
             'password' => 'required|confirmed',
         ]);
 
@@ -31,14 +32,19 @@ class RegisterController extends Controller
 
         //create student
         $student = Student::create([
-            'name'      => $request->name,
-            'email'     => $request->email,
-            'password'  => Hash::make($request->password)
+            'name' => $request->name,
+            'slug' => Str::slug($request->name, '-'),
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
         ]);
 
-        if($student) {
+        if ($student) {
             //return with Api Resource
-            return new StudentResource(true, 'Register Student Berhasil', $student);
+            return new StudentResource(
+                true,
+                'Register Student Berhasil',
+                $student
+            );
         }
 
         //return failed with Api Resource

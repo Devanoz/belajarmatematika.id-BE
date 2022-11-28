@@ -9,9 +9,20 @@ class Question extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'slug', 'image_url', 'answer_key', 'challenge_id'];
+    protected $fillable = ['title', 'slug', 'image', 'answer_key', 'challenge_id'];
 
     public function options(){
         return $this->hasMany(Option::class);
+    }
+
+    /**
+     * getImageAttribute
+     *
+     * @param  mixed $image
+     * @return void
+     */
+    public function getImageAttribute($image)
+    {
+        return asset('storage/questions/' . $image);
     }
 }

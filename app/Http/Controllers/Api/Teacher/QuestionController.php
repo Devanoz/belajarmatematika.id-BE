@@ -58,19 +58,21 @@ class QuestionController extends Controller
             $question = Question::create([
                 'title'         => $request->title,
                 'slug'          => Str::slug($request->title, '-'),
-                'image_url'     => $image->hashName(),
+                'image'         => $image->hashName(),
+                'answer_key'    => $request->answer_key,
+                'challenge_id'  => $request->challenge_id,
+            ]);
+
+        }else{
+            
+            //create Question
+            $question = Question::create([
+                'title'         => $request->title,
+                'slug'          => Str::slug($request->title, '-'),
                 'answer_key'    => $request->answer_key,
                 'challenge_id'  => $request->challenge_id,
             ]);
         }
-
-        //create Question
-        $question = Question::create([
-            'title'         => $request->title,
-            'slug'          => Str::slug($request->title, '-'),
-            'answer_key'    => $request->answer_key,
-            'challenge_id'  => $request->challenge_id,
-        ]);
 
         if($question) {
             //return success with Api Resource
@@ -134,20 +136,22 @@ class QuestionController extends Controller
             $question->update([
                 'title'         => $request->title,
                 'slug'          => Str::slug($request->title, '-'),
-                'image_url'     => $image->hashName(),
+                'image'         => $image->hashName(),
+                'answer_key'    => $request->answer_key,
+                'challenge_id'  => $request->challenge_id,
+            ]);
+
+        }else{
+
+            //update Question
+            $question->update([
+                'title'         => $request->title,
+                'slug'          => Str::slug($request->title, '-'),
                 'answer_key'    => $request->answer_key,
                 'challenge_id'  => $request->challenge_id,
             ]);
         }
-
-        //update Question
-        $question->update([
-            'title'         => $request->title,
-            'slug'          => Str::slug($request->title, '-'),
-            'answer_key'    => $request->answer_key,
-            'challenge_id'  => $request->challenge_id,
-        ]);
-
+        
         if($question) {
             //return success with Api Resource
             return new QuestionResource(true, 'Data Question Berhasil Diupdate!', $question);
@@ -165,6 +169,9 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
+        //remove image
+        Storage::disk('local')->delete('public/questions/'.basename($question->image));
+
         if($question->delete()) {
             //return success with Api Resource
             return new QuestionResource(true, 'Data Question Berhasil Dihapus!', null);

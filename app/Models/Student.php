@@ -17,7 +17,7 @@ class Student extends Authenticatable implements JWTSubject
      *
      * @var string[]
      */
-    protected $fillable = ['name', 'slug', 'email', 'password', 'image_url'];
+    protected $fillable = ['name', 'slug', 'email', 'password', 'image'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -34,6 +34,21 @@ class Student extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function studentChallenges(){
+        return $this->hasMany(StudentChallenge::class);
+    }
+
+    /**
+     * getImageAttribute
+     *
+     * @param  mixed $image
+     * @return void
+     */
+    public function getImageAttribute($image)
+    {
+        return asset('storage/students/' . $image);
+    }
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
@@ -53,9 +68,5 @@ class Student extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
-    }
-
-    public function studentChallenges(){
-        return $this->hasMany(StudentChallenge::class);
     }
 }

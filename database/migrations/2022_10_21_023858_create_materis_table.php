@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
-            $table->text('content');
+            $table->string('content');
             $table->unsignedBigInteger('topik_id');
             $table->timestamps();
 

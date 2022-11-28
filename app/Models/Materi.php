@@ -23,5 +23,16 @@ class Materi extends Model
     public function challenges(){
         return $this->hasMany(Challenge::class);
     }
+
+        /**
+     * getImageAttribute
+     *
+     * @param  mixed $image
+     * @return void
+     */
+    public function getContentAttribute($content)
+    {
+        return asset('storage/materis/' . $content);
+    }
 }
 

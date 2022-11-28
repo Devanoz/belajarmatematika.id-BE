@@ -81,7 +81,8 @@ Route::prefix('student')->group(function () {
         Route::post('/logout', [App\Http\Controllers\Api\Student\LoginController::class, 'logout'], ['as' => 'student']);
 
         //profile
-        Route::put('/profile', [App\Http\Controllers\Api\Student\ProfileController::class, 'update'], ['as' => 'student']);
+        // Route::apiResource('/profile', App\Http\Controllers\Api\Student\StudentController::class, ['except' => ['index', 'store', 'show', 'destroy', 'create', 'edit'], 'as' => 'student']);
+        Route::post('/profile', [App\Http\Controllers\Api\Student\ProfileController::class, 'update'], ['as' => 'student']);
         
         //kelas    
         Route::get('/kelas', [App\Http\Controllers\Api\Student\KelasController::class, 'index'], ['as' => 'student']);

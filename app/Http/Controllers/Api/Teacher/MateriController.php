@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MateriResource;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class MateriController extends Controller
@@ -37,7 +38,7 @@ class MateriController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title'     => 'required|unique:materis',
-            'content'   => 'required|unique:materis',
+            'content'   => 'required|file|mimes:pdf|max:5000',
             'topik_id'  => 'required',
         ]);
 
@@ -45,12 +46,16 @@ class MateriController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
+        //upload new content
+        $content = $request->file('content');
+        $content->storeAs('public/materis', $content->hashName());
+
         //create materi
         $materi = Materi::create([
-            'title' => $request->title,
-            'slug' => Str::slug($request->title, '-'),
-            'content' => $request->content,
-            'topik_id' => $request->topik_id,
+            'title'     => $request->title,
+            'slug'      => Str::slug($request->title, '-'),
+            'content'   => $content->hashName(),
+            'topik_id'  => $request->topik_id,
         ]);
 
         if($materi) {
@@ -92,7 +97,7 @@ class MateriController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title'     => 'required|unique:materis,title,'.$materi->id,
-            'content'   => 'required|unique:materis,content,'.$materi->id,
+            'content'   => 'file|mimes:pdf|max:5000',
             'topik_id'  => 'required',
         ]);
 
@@ -100,13 +105,33 @@ class MateriController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        //update materi
-        $materi->update([
-            'title' => $request->title,
-            'slug' => Str::slug($request->title, '-'),
-            'content' => $request->content,
-            'topik_id' => $request->topik_id,
-        ]);
+        //check content store
+        if ($request->file('content')) {
+
+            //remove old content
+            Storage::disk('local')->delete('public/materis/'.basename($materi->content));
+
+            //upload new content
+            $content = $request->file('content');
+            $content->storeAs('public/materis', $content->hashName());
+
+            //update materi
+            $materi->update([
+                'title'     => $request->title,
+                'slug'      => Str::slug($request->title, '-'),
+                'content'   => $content->hashName(),
+                'topik_id'  => $request->topik_id,
+            ]);
+            
+        }else{
+
+            //update materi
+            $materi->update([
+                'title'     => $request->title,
+                'slug'      => Str::slug($request->title, '-'),
+                'topik_id'  => $request->topik_id,
+            ]);
+        }
 
         if($materi) {
             //return success with Api Resource
@@ -125,6 +150,9 @@ class MateriController extends Controller
      */
     public function destroy(materi $materi)
     {
+        //remove old content
+        Storage::disk('local')->delete('public/materis/'.basename($materi->content));
+
         if($materi->delete()) {
             //return success with Api Resource
             return new MateriResource(true, 'Data Materi Berhasil Dihapus!', null);

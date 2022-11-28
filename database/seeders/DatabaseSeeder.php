@@ -77,35 +77,35 @@ class DatabaseSeeder extends Seeder
         DB::table('materis')->insert([
             'title' => 'Volume Kubus',
             'slug' => 'volume-kubus',
-            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic, atque a. Deserunt maxime facilis delectus, beatae accusantium eius enim soluta temporibus vel sit ab quasi harum tempore eos? Natus nulla beatae tempore vitae error numquam reprehenderit aliquid iste eum illum blanditiis corporis aspernatur adipisci, quia quibusdam vel, culpa dicta laboriosam architecto iure enim! Beatae animi rem nihil fugiat rerum quis, ullam dolorum quaerat! Consequuntur labore distinctio dolores reprehenderit aperiam. Eius placeat iste harum minima libero excepturi dolore suscipit eos non facilis, incidunt architecto, quo accusamus autem, nesciunt cumque eum tempore sequi quis consequuntur consectetur enim. Nesciunt eaque iste ad cumque?',
+            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
             'topik_id' => 3,
         ]);
 
         DB::table('materis')->insert([
             'title' => 'Volume Balok',
             'slug' => 'volume-balok',
-            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic, atque a. Deserunt maxime facilis delectus, beatae accusantium eius enim soluta temporibus vel sit ab quasi harum tempore eos? Natus nulla beatae tempore vitae error numquam reprehenderit aliquid iste eum illum blanditiis corporis aspernatur adipisci, quia quibusdam vel, culpa dicta laboriosam architecto iure enim! Beatae animi rem nihil fugiat rerum quis, ullam dolorum quaerat! Consequuntur labore distinctio dolores reprehenderit aperiam. Eius placeat iste harum minima libero excepturi dolore suscipit eos non facilis, incidunt architecto, quo accusamus autem, nesciunt cumque eum tempore sequi quis consequuntur consectetur enim. Nesciunt eaque iste ad cumque?',
+            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
             'topik_id' => 3,
         ]);
 
         DB::table('materis')->insert([
             'title' => 'Volume Kerucut',
             'slug' => 'volume-kerucut',
-            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic, atque a. Deserunt maxime facilis delectus, beatae accusantium eius enim soluta temporibus vel sit ab quasi harum tempore eos? Natus nulla beatae tempore vitae error numquam reprehenderit aliquid iste eum illum blanditiis corporis aspernatur adipisci, quia quibusdam vel, culpa dicta laboriosam architecto iure enim! Beatae animi rem nihil fugiat rerum quis, ullam dolorum quaerat! Consequuntur labore distinctio dolores reprehenderit aperiam. Eius placeat iste harum minima libero excepturi dolore suscipit eos non facilis, incidunt architecto, quo accusamus autem, nesciunt cumque eum tempore sequi quis consequuntur consectetur enim. Nesciunt eaque iste ad cumque?',
+            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
             'topik_id' => 3,
         ]);
 
         DB::table('materis')->insert([
             'title' => 'Volume Limas',
             'slug' => 'volume-limas',
-            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic, atque a. Deserunt maxime facilis delectus, beatae accusantium eius enim soluta temporibus vel sit ab quasi harum tempore eos? Natus nulla beatae tempore vitae error numquam reprehenderit aliquid iste eum illum blanditiis corporis aspernatur adipisci, quia quibusdam vel, culpa dicta laboriosam architecto iure enim! Beatae animi rem nihil fugiat rerum quis, ullam dolorum quaerat! Consequuntur labore distinctio dolores reprehenderit aperiam. Eius placeat iste harum minima libero excepturi dolore suscipit eos non facilis, incidunt architecto, quo accusamus autem, nesciunt cumque eum tempore sequi quis consequuntur consectetur enim. Nesciunt eaque iste ad cumque?',
+            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
             'topik_id' => 3,
         ]);
 
         DB::table('materis')->insert([
             'title' => 'Volume Bola',
             'slug' => 'volume-bola',
-            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic, atque a. Deserunt maxime facilis delectus, beatae accusantium eius enim soluta temporibus vel sit ab quasi harum tempore eos? Natus nulla beatae tempore vitae error numquam reprehenderit aliquid iste eum illum blanditiis corporis aspernatur adipisci, quia quibusdam vel, culpa dicta laboriosam architecto iure enim! Beatae animi rem nihil fugiat rerum quis, ullam dolorum quaerat! Consequuntur labore distinctio dolores reprehenderit aperiam. Eius placeat iste harum minima libero excepturi dolore suscipit eos non facilis, incidunt architecto, quo accusamus autem, nesciunt cumque eum tempore sequi quis consequuntur consectetur enim. Nesciunt eaque iste ad cumque?',
+            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
             'topik_id' => 3,
         ]);
 
