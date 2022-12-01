@@ -17,8 +17,10 @@ class TopikController extends Controller
     public function index()
     {
         //get topiks
-        $topiks = Topik::when(request()->q, function ($topiks) {
-            $topiks = $topiks->where('title', 'like', '%' . request()->q . '%');
+        $topiks = Topik::when(request()->title, function ($topiks) {
+            $topiks = $topiks->where('title', 'like', '%' . request()->title . '%');
+        })->when(request()->kelas_id, function ($topiks) {
+            $topiks = $topiks->where('kelas_id', request()->kelas_id);
         })->latest()->get();
 
         //return with Api Resource

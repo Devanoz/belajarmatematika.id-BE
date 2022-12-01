@@ -19,8 +19,8 @@ class KelasController extends Controller
     public function index()
     {
         //get kelas
-        $kelas = Kelas::when(request()->q, function($kelas) {
-            $kelas = $kelas->where('title', 'like', '%'. request()->q . '%');
+        $kelas = Kelas::when(request()->title, function($kelas) {
+            $kelas = $kelas->where('title', 'like', '%'. request()->title . '%');
         })->latest()->paginate(5);
         
         //return with Api Resource

@@ -19,8 +19,8 @@ class OptionController extends Controller
     public function index()
     {
         //get option
-        $option = Option::when(request()->q, function($option) {
-            $option = $option->where('title', 'like', '%'. request()->q . '%');
+        $option = Option::when(request()->title, function($option) {
+            $option = $option->where('title', 'like', '%'. request()->title . '%');
         })->latest()->paginate(5);
         
         //return with Api Resource

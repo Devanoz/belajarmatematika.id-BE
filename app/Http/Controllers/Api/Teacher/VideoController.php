@@ -19,8 +19,8 @@ class VideoController extends Controller
     public function index()
     {
         //get video
-        $video = Video::when(request()->q, function($video) {
-            $video = $video->where('title', 'like', '%'. request()->q . '%');
+        $video = Video::when(request()->title, function($video) {
+            $video = $video->where('title', 'like', '%'. request()->title . '%');
         })->latest()->paginate(5);
         
         //return with Api Resource

@@ -20,8 +20,8 @@ class QuestionController extends Controller
     public function index()
     {
         //get question
-        $question = Question::when(request()->q, function($question) {
-            $question = $question->where('title', 'like', '%'. request()->q . '%');
+        $question = Question::when(request()->title, function($question) {
+            $question = $question->where('title', 'like', '%'. request()->title . '%');
         })->latest()->paginate(5);
         
         //return with Api Resource

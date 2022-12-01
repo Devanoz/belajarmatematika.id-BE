@@ -17,8 +17,8 @@ class MateriController extends Controller
     public function index()
     {
         //get materi
-        $materi = Materi::when(request()->q, function($materi) {
-            $materi = $materi->where('title', 'like', '%'. request()->q . '%');
+        $materi = Materi::when(request()->title, function($materi) {
+            $materi = $materi->where('title', 'like', '%'. request()->title . '%');
         })->latest()->get();
         
         //return with Api Resource

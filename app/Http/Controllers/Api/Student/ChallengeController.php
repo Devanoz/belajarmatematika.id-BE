@@ -17,8 +17,8 @@ class ChallengeController extends Controller
     public function index()
     {
         //get challenge
-        $challenge = Challenge::when(request()->q, function ($challenge) {
-            $challenge = $challenge->where('title', 'like', '%' . request()->q . '%');
+        $challenge = Challenge::when(request()->title, function ($challenge) {
+            $challenge = $challenge->where('title', 'like', '%' . request()->title . '%');
         })->latest()->get();
 
         //return with Api Resource
