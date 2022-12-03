@@ -21,7 +21,9 @@ class ChallengeController extends Controller
         //get challenge
         $challenge = Challenge::when(request()->title, function($challenge) {
             $challenge = $challenge->where('title', 'like', '%'. request()->title . '%');
-        })->latest()->paginate(5);
+        })->when(request()->materi_id, function($challenge) {
+            $challenge = $challenge->where('materi_id', request()->materi_id);
+        })->latest()->paginate(10);
         
         //return with Api Resource
         return new ChallengeResource(true, 'List Data Challenge', $challenge);

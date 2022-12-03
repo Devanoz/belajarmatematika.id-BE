@@ -17,152 +17,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //Teachers
-        DB::table('teachers')->insert([
-            'name' => 'Teacher',
-            'email' => 'teacher@gmail.com',
-            'password' => Hash::make('password'),
+        $this->call([
+            TeacherSeeder::class,
+            StudentSeeder::class,
+            KelasSeeder::class,
+            TopikSeeder::class,
+            MateriSeeder::class,
+            VideoSeeder::class,
+            ChallengeSeeder::class,
+            QuestionSeeder::class,
+            OptionSeeder::class,
+            StudentChallengeSeeder::class,
         ]);
-
-        //Students
-        DB::table('students')->insert([
-            'name' => 'Student1',
-            'slug' => Str::slug('Student1', '-'),
-            'email' => 'student1@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
-
-        DB::table('students')->insert([
-            'name' => 'Student2',
-            'slug' => Str::slug('Student2', '-'),
-            'email' => 'student2@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
-
-        DB::table('students')->insert([
-            'name' => 'Student3',
-            'slug' => Str::slug('Student3', '-'),
-            'email' => 'student3@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
-
-        //Kelas
-        for ($i = 4; $i <= 6; $i++) {
-            DB::table('kelas')->insert([
-                'title' => 'Kelas ' . $i,
-                'slug' => 'kelas-' . $i,
-            ]);
-        }
-
-        //Topiks
-        DB::table('topiks')->insert([
-            'title' => 'Keliling Bangun Datar',
-            'slug' => 'keliling-bangun-datar',
-            'kelas_id' => 2,
-        ]);
-
-        DB::table('topiks')->insert([
-            'title' => 'Luas Bangun Datar',
-            'slug' => 'luas-bangun-datar',
-            'kelas_id' => 2,
-        ]);
-
-        DB::table('topiks')->insert([
-            'title' => 'Volume Bangun Ruang',
-            'slug' => 'volume-bangun-ruang',
-            'kelas_id' => 2,
-        ]);
-
-        //Materis
-        DB::table('materis')->insert([
-            'title' => 'Volume Kubus',
-            'slug' => 'volume-kubus',
-            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
-            'topik_id' => 3,
-        ]);
-
-        DB::table('materis')->insert([
-            'title' => 'Volume Balok',
-            'slug' => 'volume-balok',
-            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
-            'topik_id' => 3,
-        ]);
-
-        DB::table('materis')->insert([
-            'title' => 'Volume Kerucut',
-            'slug' => 'volume-kerucut',
-            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
-            'topik_id' => 3,
-        ]);
-
-        DB::table('materis')->insert([
-            'title' => 'Volume Limas',
-            'slug' => 'volume-limas',
-            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
-            'topik_id' => 3,
-        ]);
-
-        DB::table('materis')->insert([
-            'title' => 'Volume Bola',
-            'slug' => 'volume-bola',
-            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
-            'topik_id' => 3,
-        ]);
-
-        //Videos
-        DB::table('videos')->insert([
-            'title' => 'Volume Kubus',
-            'slug' => 'volume-kubus',
-            'url' => 'https://www.youtube.com/watch?v=xBZV6mpcq2I',
-            'materi_id' => 1,
-        ]);
-
-        DB::table('videos')->insert([
-            'title' => 'Volume Kubus',
-            'slug' => 'volume-kubus',
-            'url' => 'https://www.youtube.com/watch?v=f71arxkGh1o',
-            'materi_id' => 2,
-        ]);
-
-        DB::table('videos')->insert([
-            'title' => 'Volume Kerucut',
-            'slug' => 'volume-kerucut',
-            'url' => 'https://www.youtube.com/watch?v=ZWP4qyZPRE4',
-            'materi_id' => 3,
-        ]);
-
-        //Challenges
-        DB::table('challenges')->insert([
-            'title' => 'Volume Kerucut',
-            'slug' => Str::slug('Volume Kerucut', '-'),
-            'materi_id' => 1,
-        ]);
-
-        DB::table('challenges')->insert([
-            'title' => 'Volume Bola',
-            'slug' => Str::slug('Volume Bola', '-'),
-            'materi_id' => 1,
-        ]);
-
-        DB::table('challenges')->insert([
-            'title' => 'Volume Limas',
-            'slug' => Str::slug('Volume Limas', '-'),
-            'materi_id' => 1,
-        ]);
-
-        //StudentChallenges
-        for($i = 1; $i <= 3; $i++) {
-            for ($j = 1; $j <= 3; $j++) {
-                DB::table('student_challenges')->insert([
-                    'student_id'    => $i,
-                    'challenge_id'  => $j,
-                    'score' => $i * $j * 10
-                ]);
-            }
-        }
-
-        
-        
-
     }
 }

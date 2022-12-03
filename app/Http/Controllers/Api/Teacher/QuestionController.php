@@ -20,9 +20,9 @@ class QuestionController extends Controller
     public function index()
     {
         //get question
-        $question = Question::when(request()->title, function($question) {
-            $question = $question->where('title', 'like', '%'. request()->title . '%');
-        })->latest()->paginate(5);
+        $question = Question::with('options')->when(request()->challenge_id, function($question) {
+            $question = $question->where('challenge_id', request()->challenge_id);
+        })->latest()->paginate(10);
         
         //return with Api Resource
         return new QuestionResource(true, 'List Data Question', $question);
@@ -91,7 +91,7 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        $question = Question::whereId($id)->first();
+        $question = Question::with('options')->whereId($id)->first();
         
         if($question) {
             //return success with Api Resource

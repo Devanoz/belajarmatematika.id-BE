@@ -11,6 +11,10 @@ class Challenge extends Model
 
     protected $fillable = ['title','slug', 'materi_id'];
 
+    public function studentChallenges(){
+        return $this->hasMany(StudentChallenge::class);
+    }
+
     public function questions(){
         return $this->hasMany(Question::class);
     }

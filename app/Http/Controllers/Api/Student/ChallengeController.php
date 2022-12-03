@@ -19,6 +19,10 @@ class ChallengeController extends Controller
         //get challenge
         $challenge = Challenge::when(request()->title, function ($challenge) {
             $challenge = $challenge->where('title', 'like', '%' . request()->title . '%');
+        })->when(request()->materi_id, function ($challenge) {
+            $challenge = $challenge->where('materi_id', request()->materi_id);
+        })->with('studentChallenges', function ($challenge){
+            $challenge = $challenge->where('student_id', auth()->guard('api_student')->user()->id);
         })->latest()->get();
 
         //return with Api Resource

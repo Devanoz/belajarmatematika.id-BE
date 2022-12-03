@@ -19,6 +19,8 @@ class VideoController extends Controller
         //get video
         $video = Video::when(request()->title, function($video) {
             $video = $video->where('title', 'like', '%'. request()->title . '%');
+        })->when(request()->materi_id, function($video) {
+            $video = $video->where('materi_id', request()->materi_id);
         })->latest()->get();
         
         //return with Api Resource

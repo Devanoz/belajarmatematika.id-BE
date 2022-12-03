@@ -18,11 +18,13 @@ class MateriController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //get materi
+    {//get materi
         $materi = Materi::when(request()->title, function($materi) {
             $materi = $materi->where('title', 'like', '%'. request()->title . '%');
-        })->latest()->paginate(5);
+        })->when(request()->topik_id, function($materi) {
+            $materi = $materi->where('topik_id', request()->topik_id);
+        })->latest()->paginate(10);
+        
         
         //return with Api Resource
         return new MateriResource(true, 'List Data Materi', $materi);

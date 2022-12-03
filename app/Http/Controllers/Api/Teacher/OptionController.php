@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\Teacher;
 
 use App\Models\Option;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OptionResource;
@@ -19,9 +18,9 @@ class OptionController extends Controller
     public function index()
     {
         //get option
-        $option = Option::when(request()->title, function($option) {
-            $option = $option->where('title', 'like', '%'. request()->title . '%');
-        })->latest()->paginate(5);
+        $option = Option::when(request()->question_id, function($option) {
+            $option = $option->where('question_id', request()->question_id);
+        })->latest()->get();
         
         //return with Api Resource
         return new OptionResource(true, 'List Data Option', $option);
@@ -36,7 +35,10 @@ class OptionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title'         => 'required',
+            'title_1'       => 'required',
+            'title_2'       => 'required',
+            'title_3'       => 'required',
+            'title_4'       => 'required',
             'question_id'   => 'required',
         ]);
 
@@ -46,8 +48,10 @@ class OptionController extends Controller
 
         //create Option
         $option = Option::create([
-            'title'         => $request->title,
-            'slug'          => Str::slug($request->title, '-'),
+            'title_1'       => $request->title_1,
+            'title_2'       => $request->title_2,
+            'title_3'       => $request->title_3,
+            'title_4'       => $request->title_4,
             'question_id'   => $request->question_id,
         ]);
 
@@ -89,7 +93,10 @@ class OptionController extends Controller
     public function update(Request $request, Option $option)
     {
         $validator = Validator::make($request->all(), [
-            'title'         => 'required',
+            'title_1'       => 'required',
+            'title_2'       => 'required',
+            'title_3'       => 'required',
+            'title_4'       => 'required',
             'question_id'   => 'required',
         ]);
 
@@ -99,8 +106,10 @@ class OptionController extends Controller
 
         //create Option
         $option = Option::create([
-            'title'         => $request->title,
-            'slug'          => Str::slug($request->title, '-'),
+            'title_1'       => $request->title_1,
+            'title_2'       => $request->title_2,
+            'title_3'       => $request->title_3,
+            'title_4'       => $request->title_4,
             'question_id'   => $request->question_id,
         ]);
 

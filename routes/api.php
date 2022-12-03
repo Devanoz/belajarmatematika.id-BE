@@ -81,7 +81,6 @@ Route::prefix('student')->group(function () {
         Route::post('/logout', [App\Http\Controllers\Api\Student\LoginController::class, 'logout'], ['as' => 'student']);
 
         //profile
-        // Route::apiResource('/profile', App\Http\Controllers\Api\Student\StudentController::class, ['except' => ['index', 'store', 'show', 'destroy', 'create', 'edit'], 'as' => 'student']);
         Route::post('/profile', [App\Http\Controllers\Api\Student\ProfileController::class, 'update'], ['as' => 'student']);
         
         //kelas    
@@ -104,6 +103,9 @@ Route::prefix('student')->group(function () {
     
         //scoreboard
         Route::get('/scoreboards', [App\Http\Controllers\Api\Student\ScoreBoardController::class, 'index'], ['as' => 'student']);
+
+        //studentChallenge
+        Route::post('/studentChallenges', [App\Http\Controllers\Api\Student\StudentChallengeController::class, 'store'], ['as' => 'student']);
     
     });
 
