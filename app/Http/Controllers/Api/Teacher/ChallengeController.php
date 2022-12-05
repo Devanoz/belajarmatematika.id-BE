@@ -29,6 +29,20 @@ class ChallengeController extends Controller
         return new ChallengeResource(true, 'List Data Challenge', $challenge);
     }
 
+        /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexWithMateri()
+    {
+        //get challenge
+        $challenge = Challenge::with('materi')->latest()->get();
+
+        //return with Api Resource
+        return new ChallengeResource(true, 'List Data Challenge With Materi', $challenge);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

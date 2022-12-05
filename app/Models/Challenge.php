@@ -18,4 +18,8 @@ class Challenge extends Model
     public function questions(){
         return $this->hasMany(Question::class);
     }
+
+    public function materi(){
+        return $this->belongsTo(Materi::class);
+    }
 }
