@@ -17,37 +17,37 @@ class OptionSeeder extends Seeder
     {
         // Question_id = 1
         DB::table('options')->insert([
-            'title_1' => 4,
-            'title_2' => 5,
-            'title_3' => 6,
-            'title_4' => 7,
+            'A' => 4,
+            'B' => 5,
+            'C' => 6,
+            'D' => 7,
             'question_id' => 1,
         ]);
 
         // Question_id = 2
         DB::table('options')->insert([
-            'title_1' => 8,
-            'title_2' => 9,
-            'title_3' => 10,
-            'title_4' => 11,
+            'A' => 8,
+            'B' => 9,
+            'C' => 10,
+            'D' => 11,
             'question_id' => 2,
         ]);
 
         // Question_id = 4
         DB::table('options')->insert([
-            'title_1' => 7,
-            'title_2' => 8,
-            'title_3' => 9,
-            'title_4' => 10,
+            'A' => 7,
+            'B' => 8,
+            'C' => 9,
+            'D' => 10,
             'question_id' => 4,
         ]);
 
         // Question_id = 5
         DB::table('options')->insert([
-            'title_1' => 13,
-            'title_2' => 14,
-            'title_3' => 15,
-            'title_4' => 16,
+            'A' => 13,
+            'B' => 14,
+            'C' => 15,
+            'D' => 16,
             'question_id' => 5,
         ]);
     }

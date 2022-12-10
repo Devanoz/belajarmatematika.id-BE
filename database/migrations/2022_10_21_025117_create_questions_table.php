@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('slug');
             $table->string('image')->nullable();
             $table->string('answer_key');
+            $table->boolean('is_pilihan_ganda');
             $table->unsignedBigInteger('challenge_id');
             $table->timestamps();
 

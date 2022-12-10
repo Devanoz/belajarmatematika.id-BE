@@ -9,5 +9,11 @@ class Option extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title_1', 'title_2', 'title_3', 'title_4','question_id'];
+    protected $fillable = [
+        'A', 
+        'B', 
+        'C', 
+        'D',
+        'question_id'
+    ];
 }

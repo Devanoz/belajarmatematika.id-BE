@@ -35,10 +35,10 @@ class OptionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title_1'       => 'required',
-            'title_2'       => 'required',
-            'title_3'       => 'required',
-            'title_4'       => 'required',
+            'A'       => 'required',
+            'B'       => 'required',
+            'C'       => 'required',
+            'D'       => 'required',
             'question_id'   => 'required',
         ]);
 
@@ -48,10 +48,10 @@ class OptionController extends Controller
 
         //create Option
         $option = Option::create([
-            'title_1'       => $request->title_1,
-            'title_2'       => $request->title_2,
-            'title_3'       => $request->title_3,
-            'title_4'       => $request->title_4,
+            'A'       => $request->title_1,
+            'B'       => $request->title_2,
+            'C'       => $request->title_3,
+            'D'       => $request->title_4,
             'question_id'   => $request->question_id,
         ]);
 
@@ -93,10 +93,10 @@ class OptionController extends Controller
     public function update(Request $request, Option $option)
     {
         $validator = Validator::make($request->all(), [
-            'title_1'       => 'required',
-            'title_2'       => 'required',
-            'title_3'       => 'required',
-            'title_4'       => 'required',
+            'A'       => 'required',
+            'B'       => 'required',
+            'C'       => 'required',
+            'D'       => 'required',
             'question_id'   => 'required',
         ]);
 
@@ -106,10 +106,10 @@ class OptionController extends Controller
 
         //create Option
         $option = Option::create([
-            'title_1'       => $request->title_1,
-            'title_2'       => $request->title_2,
-            'title_3'       => $request->title_3,
-            'title_4'       => $request->title_4,
+            'A'       => $request->title_1,
+            'B'       => $request->title_2,
+            'C'       => $request->title_3,
+            'D'       => $request->title_4,
             'question_id'   => $request->question_id,
         ]);
 

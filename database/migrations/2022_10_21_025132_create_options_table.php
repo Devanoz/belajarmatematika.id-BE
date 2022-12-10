@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('options', function (Blueprint $table) {
             $table->id();
-            $table->string('title_1');
-            $table->string('title_2');
-            $table->string('title_3');
-            $table->string('title_4');
+            $table->string('A');
+            $table->string('B');
+            $table->string('C');
+            $table->string('D');
             $table->unsignedBigInteger('question_id');
             $table->timestamps();
 

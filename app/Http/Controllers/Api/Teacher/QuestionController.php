@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Teacher;
 
 use App\Models\Question;
+use App\Models\Option;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -37,10 +38,11 @@ class QuestionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title'         => 'required',
-            'image'         => 'image|mimes:jpeg,jpg,png|max:2000',
-            'answer_key'    => 'required',
-            'challenge_id'  => 'required',
+            'title'             => 'required',
+            'image'             => 'image|mimes:jpeg,jpg,png|max:2000',
+            'answer_key'        => 'required',
+            'is_pilihan_ganda'  => 'required|boolean',
+            'challenge_id'      => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -56,24 +58,57 @@ class QuestionController extends Controller
 
             //create Question
             $question = Question::create([
-                'title'         => $request->title,
-                'slug'          => Str::slug($request->title, '-'),
-                'image'         => $image->hashName(),
-                'answer_key'    => $request->answer_key,
-                'challenge_id'  => $request->challenge_id,
+                'title'             => $request->title,
+                'slug'              => Str::slug($request->title, '-'),
+                'image'             => $image->hashName(),
+                'answer_key'        => $request->answer_key,
+                'is_pilihan_ganda'  => $request->is_pilihan_ganda,
+                'challenge_id'      => $request->challenge_id,
             ]);
-
+            
         }else{
             
             //create Question
             $question = Question::create([
-                'title'         => $request->title,
-                'slug'          => Str::slug($request->title, '-'),
-                'answer_key'    => $request->answer_key,
-                'challenge_id'  => $request->challenge_id,
+                'title'             => $request->title,
+                'slug'              => Str::slug($request->title, '-'),
+                'answer_key'        => $request->answer_key,
+                'is_pilihan_ganda'  => $request->is_pilihan_ganda,
+                'challenge_id'      => $request->challenge_id,
             ]);
         }
 
+        $option = [];
+
+        if($request->is_pilihan_ganda){
+            $validator = Validator::make($request->all(), [
+                'A'       => 'required',
+                'B'       => 'required',
+                'C'       => 'required',
+                'D'       => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 422);
+            }
+
+            //create Option
+            $option = Option::create([
+                'A'       => $request->A,
+                'B'       => $request->B,
+                'C'       => $request->C,
+                'D'       => $request->D,
+                'question_id'   => $question->id,
+            ]);
+
+            if(! $option) {
+                //return failed with Api Resource
+                return new OptionResource(false, 'Data Option Berhasil Disimpan!', null);
+            }
+        }
+
+        $question->options = $option;
+        
         if($question) {
             //return success with Api Resource
             return new QuestionResource(true, 'Data Question Berhasil Disimpan!', $question);
@@ -82,7 +117,7 @@ class QuestionController extends Controller
         //return failed with Api Resource
         return new QuestionResource(false, 'Data Question Gagal Disimpan!', null);
     }
-
+    
     /**
      * Display the specified resource.
      *
@@ -112,10 +147,11 @@ class QuestionController extends Controller
     public function update(Request $request, Question $question)
     {
         $validator = Validator::make($request->all(), [
-            'title'         => 'required',
-            'image'         => 'image|mimes:jpeg,jpg,png|max:2000',
-            'answer_key'    => 'required',
-            'challenge_id'  => 'required',
+            'title'             => 'required',
+            'image'             => 'image|mimes:jpeg,jpg,png|max:2000',
+            'answer_key'        => 'required',
+            'is_pilihan_ganda'  => 'required|boolean',
+            'challenge_id'      => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -131,27 +167,60 @@ class QuestionController extends Controller
             //upload new image
             $image = $request->file('image');
             $image->storeAs('public/questions', $image->hashName());
-
+            
             //update Question
             $question->update([
-                'title'         => $request->title,
-                'slug'          => Str::slug($request->title, '-'),
-                'image'         => $image->hashName(),
-                'answer_key'    => $request->answer_key,
-                'challenge_id'  => $request->challenge_id,
+                'title'             => $request->title,
+                'slug'              => Str::slug($request->title, '-'),
+                'image'             => $image->hashName(),
+                'answer_key'        => $request->answer_key,
+                'is_pilihan_ganda'  => $request->is_pilihan_ganda,
+                'challenge_id'      => $request->challenge_id,
             ]);
-
+            
         }else{
-
+            
             //update Question
             $question->update([
-                'title'         => $request->title,
-                'slug'          => Str::slug($request->title, '-'),
-                'answer_key'    => $request->answer_key,
-                'challenge_id'  => $request->challenge_id,
+                'title'             => $request->title,
+                'slug'              => Str::slug($request->title, '-'),
+                'answer_key'        => $request->answer_key,
+                'is_pilihan_ganda'  => $request->is_pilihan_ganda,
+                'challenge_id'      => $request->challenge_id,
             ]);
         }
         
+        $option = [];
+
+        if($request->is_pilihan_ganda){
+            $validator = Validator::make($request->all(), [
+                'A'       => 'required',
+                'B'       => 'required',
+                'C'       => 'required',
+                'D'       => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 422);
+            }
+
+            //create Option
+            $option = Option::create([
+                'A'       => $request->A,
+                'B'       => $request->B,
+                'C'       => $request->C,
+                'D'       => $request->D,
+                'question_id'   => $question->id,
+            ]);
+
+            if(! $option) {
+                //return failed with Api Resource
+                return new OptionResource(false, 'Data Option Berhasil Diupdate!', null);
+            }
+        }
+
+        $question->options = $option;
+
         if($question) {
             //return success with Api Resource
             return new QuestionResource(true, 'Data Question Berhasil Diupdate!', $question);
@@ -172,7 +241,7 @@ class QuestionController extends Controller
         //remove image
         Storage::disk('local')->delete('public/questions/'.basename($question->image));
 
-        if($question->delete()) {
+        if(Option::where('question_id', $question->id)->delete() && $question->delete()) {
             //return success with Api Resource
             return new QuestionResource(true, 'Data Question Berhasil Dihapus!', null);
         }
