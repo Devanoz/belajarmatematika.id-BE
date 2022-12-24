@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Teacher;
 
 use App\Models\Video;
+use App\Models\Materi;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,11 +20,15 @@ class VideoController extends Controller
     public function index()
     {
         //get video
-        $video = Video::when(request()->title, function($video) {
-            $video = $video->where('title', 'like', '%'. request()->title . '%');
-        })->when(request()->materi_id, function($video) {
-            $video = $video->where('materi_id', request()->materi_id);
+        $video = Materi::with('videos')->when(request()->title, function($query) {
+            $query = $query->where('title', 'like', '%'. request()->title . '%');
         })->latest()->paginate(10);
+
+        // $video = Video::when(request()->title, function($video) {
+        //     $video = $video->where('title', 'like', '%'. request()->title . '%');
+        // })->when(request()->materi_id, function($video) {
+        //     $video = $video->where('materi_id', request()->materi_id);
+        // })->latest()->paginate(10);
         
         //return with Api Resource
         return new VideoResource(true, 'List Data Video', $video);

@@ -15,4 +15,9 @@ class Video extends Model
         'url',
         'materi_id',
     ];   
+
+    public function getUrlAttribute($url)
+    {
+        return str_replace('https://www.youtube.com/watch?v=', 'https://www.youtube.com/embed/', $url);
+    }
 }
