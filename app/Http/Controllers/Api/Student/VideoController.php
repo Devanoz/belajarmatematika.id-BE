@@ -31,4 +31,23 @@ class VideoController extends Controller
         //return with Api Resource
         return new VideoResource(true, 'List Data Video', $video);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $video = Video::whereId($id)->first();
+        
+        if($video) {
+            //return success with Api Resource
+            return new VideoResource(true, 'Detail Data Video!', $video);
+        }
+
+        //return failed with Api Resource
+        return new VideoResource(false, 'Detail Data Video Tidak DItemukan!', null);
+    }
 }

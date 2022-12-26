@@ -94,7 +94,7 @@ Route::prefix('student')->group(function () {
         Route::get('/materis', [App\Http\Controllers\Api\Student\MateriController::class, 'index'], ['as' => 'student']);
         
         //video
-        Route::get('/videos', [App\Http\Controllers\Api\Student\VideoController::class, 'index'], ['as' => 'student']);
+        Route::apiResource('/videos', App\Http\Controllers\Api\Student\VideoController::class, ['except' => ['store', 'update', 'destroy', 'create', 'edit'], 'as' => 'student']);
     
         //challenge
         Route::get('/challenges', [App\Http\Controllers\Api\Student\ChallengeController::class, 'index'], ['as' => 'student']);
