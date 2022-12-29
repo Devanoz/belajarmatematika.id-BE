@@ -21,7 +21,7 @@ class ChallengeController extends Controller
     {
         //get challenge
         $challenge = Materi::when(request()->materi_id, function($challenge) {
-            $challenge = $challenge->where('materi_id', request()->materi_id);
+            $challenge = $challenge->where('id', request()->materi_id);
         })->with('challenges', function($challenge){
             $challenge = $challenge->when(request()->title, function($challenge) {
                 $challenge = $challenge->where('title', 'like', '%' . request()->title . '%');
