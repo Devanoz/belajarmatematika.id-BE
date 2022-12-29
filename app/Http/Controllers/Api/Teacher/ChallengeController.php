@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Teacher;
 
+use App\Models\Materi;
 use App\Models\Challenge;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -19,17 +20,29 @@ class ChallengeController extends Controller
     public function index()
     {
         //get challenge
-        $challenge = Challenge::when(request()->title, function($challenge) {
-            $challenge = $challenge->where('title', 'like', '%'. request()->title . '%');
-        })->when(request()->materi_id, function($challenge) {
+        $challenge = Materi::when(request()->materi_id, function($challenge) {
             $challenge = $challenge->where('materi_id', request()->materi_id);
+        })->with('challenges', function($challenge){
+            $challenge = $challenge->when(request()->title, function($challenge) {
+                $challenge = $challenge->where('title', 'like', '%' . request()->title . '%');
+            });
         })->latest()->paginate(10);
+
+        // ->has('challenges', function($challenge){
+        //     $challenge->count() > 0;
+        // })
+
+        // $challenge = Challenge::when(request()->title, function($challenge) {
+        //     $challenge = $challenge->where('title', 'like', '%'. request()->title . '%');
+        // })->when(request()->materi_id, function($challenge) {
+        //     $challenge = $challenge->where('materi_id', request()->materi_id);
+        // })->latest()->paginate(10);
         
         //return with Api Resource
         return new ChallengeResource(true, 'List Data Challenge', $challenge);
     }
 
-        /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
