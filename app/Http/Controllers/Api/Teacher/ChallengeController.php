@@ -23,10 +23,16 @@ class ChallengeController extends Controller
         $challenge = Materi::when(request()->materi_id, function($challenge) {
             $challenge = $challenge->where('id', request()->materi_id);
         })->with('challenges', function($challenge){
-            $challenge = $challenge->when(request()->title, function($challenge) {
-                $challenge = $challenge->where('title', 'like', '%' . request()->title . '%');
+            $challenge->when(request()->title, function($challenge) {
+                $challenge->where('title', 'like', '%' . request()->title . '%');
             });
         })->latest()->paginate(10);
+
+        // Paginator::make($challenge->toArray(), $challenge->count(), 10);
+
+        // ->filter(function($challenge){
+        //     return $challenge->challenges->count() > 0;
+        // })
 
         // ->has('challenges', function($challenge){
         //     $challenge->count() > 0;
