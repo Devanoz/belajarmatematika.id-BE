@@ -25,7 +25,8 @@ return new class extends Migration
             $table
             ->foreign('materi_id')
             ->references('id')
-            ->on('materis');
+            ->on('materis')
+            ->onDelete('cascade');
         });
     }
 

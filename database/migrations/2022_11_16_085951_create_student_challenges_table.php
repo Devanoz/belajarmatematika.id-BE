@@ -24,13 +24,15 @@ return new class extends Migration
             $table
                 ->foreign('student_id')
                 ->references('id')
-                ->on('students');
+                ->on('students')
+                ->onDelete('cascade');
             
             //relationship to challenges
             $table
                 ->foreign('challenge_id')
                 ->references('id')
-                ->on('challenges');
+                ->on('challenges')
+                ->onDelete('cascade');
         });
     }
 
