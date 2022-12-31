@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Student;
 use Illuminate\Http\Request;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
+use App\Models\Challenge;
 use App\Models\StudentChallenge;
 use Illuminate\Support\Facades\Validator;
 
@@ -61,6 +62,17 @@ class LoginController extends Controller
         //response data "user" yang sedang login
         $user = auth()->guard('api_student')->user();
         $user['score'] = StudentChallenge::where('student_id', auth()->guard('api_student')->user()->id)->sum('score');
+        $user['rank'] = StudentChallenge::
+            selectRaw('sum(score) as score, student_id')
+            ->groupBy('student_id')
+            ->orderByRaw('sum(score) desc')
+            ->having('score', '>=', $user['score'])
+            ->count();
+        $user['progress'] = 
+            StudentChallenge::where('student_id', auth()->guard('api_student')->user()->id)->count()
+            / Challenge::count()
+            * 100;
+
         return response()->json([
             'success' => true,
             'user'    => $user

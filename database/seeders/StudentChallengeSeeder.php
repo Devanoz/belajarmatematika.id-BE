@@ -15,14 +15,21 @@ class StudentChallengeSeeder extends Seeder
      */
     public function run()
     {
-        for($i = 1; $i <= 3; $i++) {
-            for ($j = 1; $j <= 3; $j++) {
+        for($i = 2; $i <= 20; $i++) {
+            for ($j = 1; $j <= 15; $j++) {
                 DB::table('student_challenges')->insert([
                     'student_id'    => $i,
                     'challenge_id'  => $j,
-                    'score' => $i * $j * 10
+                    'score' => ($i + $j) + 65
                 ]);
             }
+        }
+        for ($j = 1; $j <= 10; $j++) {
+            DB::table('student_challenges')->insert([
+                'student_id'    => 1,
+                'challenge_id'  => $j,
+                'score' => ($i + $j) + 65
+            ]);
         }
     }
 }

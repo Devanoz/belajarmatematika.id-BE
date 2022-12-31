@@ -16,7 +16,6 @@ class ChallengeSeeder extends Seeder
      */
     public function run()
     {
-
         for($i = 1; $i <= 3; $i++){
             DB::table('challenges')->insert([
                 'title' => 'Volume Kubus ' . $i,

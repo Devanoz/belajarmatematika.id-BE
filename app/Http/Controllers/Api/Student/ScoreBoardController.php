@@ -24,7 +24,8 @@ class ScoreBoardController extends Controller
             ->selectRaw('sum(score) as score, student_id')
             ->groupBy('student_id')
             ->orderByRaw('sum(score) desc')
-            ->get();
+            ->get()
+            ->take(10);
 
         // $scoreBoard = [
         //     'score' => $scoreBoard->data->score,
