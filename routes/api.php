@@ -37,7 +37,8 @@ Route::prefix('teacher')->group(function () {
         
         //topik
         Route::apiResource('/topiks', App\Http\Controllers\Api\Teacher\TopikController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
-        
+        Route::get('/topiksWithMateris', [App\Http\Controllers\Api\Teacher\TopikController::class, 'indexWithMateris', ['as' => 'teacher']]);
+
         //materi
         Route::apiResource('/materis', App\Http\Controllers\Api\Teacher\MateriController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
     
