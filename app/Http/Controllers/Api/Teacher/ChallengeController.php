@@ -103,7 +103,7 @@ class ChallengeController extends Controller
      */
     public function show($id)
     {
-        $challenge = Challenge::whereId($id)->first();
+        $challenge = Challenge::with('materi')->whereId($id)->first();
         
         if($challenge) {
             //return success with Api Resource
