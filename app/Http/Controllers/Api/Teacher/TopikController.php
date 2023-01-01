@@ -57,7 +57,7 @@ class TopikController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title'     => 'required|unique:topiks',
-            'kelas_id'  => 'required',
+            'kelas_id'  => 'required|exists:kelas,id',
         ]);
 
         if ($validator->fails()) {
@@ -110,7 +110,7 @@ class TopikController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title'     => 'required|unique:topiks,title,'.$Topik->id,
-            'kelas_id'  => 'required',
+            'kelas_id'  => 'required|exists:kelas,id',
         ]);
 
         if ($validator->fails()) {

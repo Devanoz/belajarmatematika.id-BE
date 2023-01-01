@@ -21,7 +21,7 @@ class QuestionSeeder extends Seeder
         DB::table('questions')->insert([
             'title' => $title,
             'slug' => Str::slug($title, '-'),
-            'answer_key' => 6,
+            'answer_key' => 'C',
             'is_pilihan_ganda' => true,
             'challenge_id' => 1,
         ]);
@@ -30,7 +30,7 @@ class QuestionSeeder extends Seeder
         DB::table('questions')->insert([
             'title' => $title,
             'slug' => Str::slug($title, '-'),
-            'answer_key' => 8,
+            'answer_key' => 'A',
             'is_pilihan_ganda' => true,
             'challenge_id' => 1,
         ]);
@@ -39,7 +39,7 @@ class QuestionSeeder extends Seeder
         DB::table('questions')->insert([
             'title' => $title,
             'slug' => Str::slug($title, '-'),
-            'answer_key' => 10,
+            'answer_key' => '10',
             'is_pilihan_ganda' => false,
             'challenge_id' => 1,
         ]);
@@ -49,7 +49,7 @@ class QuestionSeeder extends Seeder
         DB::table('questions')->insert([
             'title' => $title,
             'slug' => Str::slug($title, '-'),
-            'answer_key' => 9,
+            'answer_key' => 'C',
             'is_pilihan_ganda' => true,
             'challenge_id' => 2,
         ]);
@@ -58,7 +58,7 @@ class QuestionSeeder extends Seeder
         DB::table('questions')->insert([
             'title' => $title,
             'slug' => Str::slug($title, '-'),
-            'answer_key' => 16,
+            'answer_key' => 'D',
             'is_pilihan_ganda' => true,
             'challenge_id' => 2,
         ]);
@@ -67,7 +67,7 @@ class QuestionSeeder extends Seeder
         DB::table('questions')->insert([
             'title' => $title,
             'slug' => Str::slug($title, '-'),
-            'answer_key' => 25,
+            'answer_key' => '25',
             'is_pilihan_ganda' => false,
             'challenge_id' => 2,
         ]);

@@ -25,4 +25,8 @@ class Question extends Model
     {
         return asset('storage/questions/' . $image);
     }
+
+    public function studentAnswers(){
+        return $this->hasMany(StudentAnswer::class);
+    }
 }

@@ -107,9 +107,12 @@ Route::prefix('student')->group(function () {
         //scoreboard
         Route::get('/scoreboards', [App\Http\Controllers\Api\Student\ScoreBoardController::class, 'index'], ['as' => 'student']);
 
-        //studentChallenge
-        Route::post('/studentChallenges', [App\Http\Controllers\Api\Student\StudentChallengeController::class, 'store'], ['as' => 'student']);
+        //submitChallenge
+        Route::post('/submitChallenges', [App\Http\Controllers\Api\Student\StudentChallengeController::class, 'store'], ['as' => 'student']);
     
+        //submitAnswer
+        Route::post('/submitAnswers', [App\Http\Controllers\Api\Student\StudentAnswerController::class, 'store'], ['as' => 'student']);
+
     });
 
 });

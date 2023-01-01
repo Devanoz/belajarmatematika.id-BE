@@ -72,7 +72,7 @@ class ChallengeController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title'     => 'required|unique:challenges',
-            'materi_id' => 'required'
+            'materi_id' => 'required|exists:materis,id'
         ]);
 
         if ($validator->fails()) {
@@ -125,7 +125,7 @@ class ChallengeController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title'     => 'required|unique:challenges,title,'.$challenge->id,
-            'materi_id' => 'required',
+            'materi_id' => 'required|exists:questions,id',
         ]);
 
         if ($validator->fails()) {

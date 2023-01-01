@@ -39,7 +39,7 @@ class OptionController extends Controller
             'B'       => 'required',
             'C'       => 'required',
             'D'       => 'required',
-            'question_id'   => 'required',
+            'question_id'   => 'required|exists:questions,id',
         ]);
 
         if ($validator->fails()) {
@@ -97,7 +97,7 @@ class OptionController extends Controller
             'B'       => 'required',
             'C'       => 'required',
             'D'       => 'required',
-            'question_id'   => 'required',
+            'question_id'   => 'required|exists:questions,id',
         ]);
 
         if ($validator->fails()) {

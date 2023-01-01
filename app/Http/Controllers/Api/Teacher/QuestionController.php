@@ -7,6 +7,7 @@ use App\Models\Option;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\OptionResource;
 use App\Http\Resources\QuestionResource;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -42,7 +43,7 @@ class QuestionController extends Controller
             'image'             => 'image|mimes:jpeg,jpg,png|max:2000',
             'answer_key'        => 'required',
             'is_pilihan_ganda'  => 'required|boolean',
-            'challenge_id'      => 'required',
+            'challenge_id'      => 'required|exists:challenges,id',
         ]);
 
         if ($validator->fails()) {
@@ -151,7 +152,7 @@ class QuestionController extends Controller
             'image'             => 'image|mimes:jpeg,jpg,png|max:2000',
             'answer_key'        => 'required',
             'is_pilihan_ganda'  => 'required|boolean',
-            'challenge_id'      => 'required',
+            'challenge_id'      => 'required|exists:challenges,id',
         ]);
 
         if ($validator->fails()) {

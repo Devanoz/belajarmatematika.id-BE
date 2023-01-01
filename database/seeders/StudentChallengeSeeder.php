@@ -24,12 +24,5 @@ class StudentChallengeSeeder extends Seeder
                 ]);
             }
         }
-        for ($j = 1; $j <= 10; $j++) {
-            DB::table('student_challenges')->insert([
-                'student_id'    => 1,
-                'challenge_id'  => $j,
-                'score' => ($i + $j) + 65
-            ]);
-        }
     }
 }

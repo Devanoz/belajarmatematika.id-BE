@@ -41,7 +41,7 @@ class MateriController extends Controller
         $validator = Validator::make($request->all(), [
             'title'     => 'required|unique:materis',
             'content'   => 'required|file|mimes:pdf|max:5000',
-            'topik_id'  => 'required',
+            'topik_id'  => 'required|exists:topiks,id',
         ]);
 
         if ($validator->fails()) {
@@ -100,7 +100,7 @@ class MateriController extends Controller
         $validator = Validator::make($request->all(), [
             'title'     => 'required|unique:materis,title,'.$materi->id,
             'content'   => 'file|mimes:pdf|max:5000',
-            'topik_id'  => 'required',
+            'topik_id'  => 'required|exists:topiks,id',
         ]);
 
         if ($validator->fails()) {

@@ -45,7 +45,7 @@ class VideoController extends Controller
         $validator = Validator::make($request->all(), [
             'title'     => 'required|unique:videos',
             'url'       => 'required|unique:videos',
-            'materi_id' => 'required',
+            'materi_id' => 'required|exists:materis,id',
         ]);
 
         if ($validator->fails()) {
@@ -100,7 +100,7 @@ class VideoController extends Controller
         $validator = Validator::make($request->all(), [
             'title'     => 'required|unique:videos,title,'.$video->id,
             'url'       => 'required|unique:videos,url,'.$video->id,
-            'materi_id' => 'required',
+            'materi_id' => 'required|exists:materis,id',
         ]);
 
         if ($validator->fails()) {

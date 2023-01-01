@@ -17,8 +17,15 @@ class QuestionController extends Controller
     public function index()
     {
         //get question
-        $question = Question::with('options')->where('challenge_id', request()->challenge_id)->latest()->get();
+        $question = Question::with('options')
+        ->with(['studentAnswers' => function ($studentAnswer){
+            $studentAnswer->where('student_id', auth()->guard('api_student')->user()->id);
+        }])->where('challenge_id', request()->challenge_id)
+        ->latest()
+        ->get();
 
+        
+            
         //return with Api Resource
         return new QuestionResource(true, 'List Data Question', $question);
     }
