@@ -53,6 +53,11 @@ class StudentAnswerController extends Controller
                 $studentAnswer->where('student_id', auth()->guard('api_student')->user()->id);
             })->where('challenge_id', $challenge_id)->latest()->get();
 
+            $question = array_map(function ($question) {
+                unset($question['answer_key']);
+                return $question;
+            }, $question->toArray());
+
             //return with Api Resource
             return new StudentAnswerResource(true, 'Simpan StudentAnswer Berhasil!', $question);
         }
