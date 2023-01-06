@@ -26,4 +26,23 @@ class MateriController extends Controller
         //return with Api Resource
         return new MateriResource(true, 'List Data Materi', $materi);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $materi = Materi::whereId($id)->first();
+        
+        if($materi) {
+            //return success with Api Resource
+            return new MateriResource(true, 'Detail Data Materi!', $materi);
+        }
+
+        //return failed with Api Resource
+        return new MateriResource(false, 'Detail Data Materi Tidak Ditemukan!', null);
+    }
 }
