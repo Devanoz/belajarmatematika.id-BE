@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Student;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\StudentAnswerResource;
 use App\Models\Question;
+use App\Models\Challenge;
 use App\Models\StudentAnswer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -48,18 +49,23 @@ class StudentAnswerController extends Controller
         $challenge_id = Question::where('id', $request->question_id)->first()->challenge_id;
 
         if($new_student_answer){
+            //get challenge
+            $challenge = Challenge::whereId($challenge_id)->first();
+
             //get question
-            $question = Question::with('options')->with('studentAnswers', function ($studentAnswer){
+            $questions = Question::with('options')->with('studentAnswers', function ($studentAnswer){
                 $studentAnswer->where('student_id', auth()->guard('api_student')->user()->id);
             })->where('challenge_id', $challenge_id)->latest()->get();
 
-            $question = array_map(function ($question) {
-                unset($question['answer_key']);
-                return $question;
-            }, $question->toArray());
+            $questions = array_map(function ($questions) {
+                unset($questions['answer_key']);
+                return $questions;
+            }, $questions->toArray());
+
+            $challenge['questions'] = $questions;
 
             //return with Api Resource
-            return new StudentAnswerResource(true, 'Simpan StudentAnswer Berhasil!', $question);
+            return new StudentAnswerResource(true, 'Simpan StudentAnswer Berhasil!', $challenge);
         }
 
         //return failed with Api Resource

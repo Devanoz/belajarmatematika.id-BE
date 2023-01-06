@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Student;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\QuestionResource;
+use App\Models\Challenge;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +19,8 @@ class QuestionController extends Controller
     public function index()
     {
         //get question
-        $question = Question::with('options')
+        $challenge = Challenge::whereId(request()->challenge_id)->first();
+        $questions = Question::with('options')
         ->with(['studentAnswers' => function ($studentAnswer){
             $studentAnswer->where('student_id', auth()->guard('api_student')->user()->id);
         }])->where('challenge_id', request()->challenge_id)
@@ -26,13 +28,15 @@ class QuestionController extends Controller
         ->get()
         ;
 
-        $question = array_map(function ($question) {
-            unset($question['answer_key']);
-            return $question;
-        }, $question->toArray());
+        $questions = array_map(function ($questions) {
+            unset($questions['answer_key']);
+            return $questions;
+        }, $questions->toArray());
+
+        $challenge['questions'] = $questions;
 
         // dd($question);
         //return with Api Resource
-        return new QuestionResource(true, 'List Data Question', $question);
+        return new QuestionResource(true, 'List Data Question', $challenge);
     }
 }
