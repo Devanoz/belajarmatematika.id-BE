@@ -29,7 +29,7 @@ class TopikController extends Controller
         return new TopikResource(true, 'List Data topiks', $topiks);
     }
 
-        /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -44,7 +44,7 @@ class TopikController extends Controller
         })->latest()->get();
 
         //return with Api Resource
-        return new TopikResource(true, 'List Data topiks', $topiks);
+        return new TopikResource(true, 'List Data topiks with Materi', $topiks);
     }
 
     /**

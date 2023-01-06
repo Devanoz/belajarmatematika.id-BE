@@ -18,6 +18,10 @@ class Video extends Model
 
     public function getUrlAttribute($url)
     {
-        return str_replace('https://www.youtube.com/watch?v=', 'https://www.youtube.com/embed/', $url);
+        if($url){
+            return str_replace('https://www.youtube.com/watch?v=', 'https://www.youtube.com/embed/', $url);
+        }else{
+            return null;
+        }
     }
 }

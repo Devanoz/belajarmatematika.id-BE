@@ -90,6 +90,7 @@ Route::prefix('student')->group(function () {
         
         //topik
         Route::get('/topiks', [App\Http\Controllers\Api\Student\TopikController::class, 'index'], ['as' => 'student']);
+        Route::get('/topiksWithMateris', [App\Http\Controllers\Api\Student\TopikController::class, 'indexWithMateris', ['as' => 'student']]);
 
         //materi 
         Route::get('/materis', [App\Http\Controllers\Api\Student\MateriController::class, 'index'], ['as' => 'student']);

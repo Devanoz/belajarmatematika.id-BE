@@ -15,6 +15,10 @@ class Question extends Model
         return $this->hasMany(Option::class);
     }
 
+    public function studentAnswers(){
+        return $this->hasMany(StudentAnswer::class);
+    }
+
     /**
      * getImageAttribute
      *
@@ -23,10 +27,10 @@ class Question extends Model
      */
     public function getImageAttribute($image)
     {
-        return asset('storage/questions/' . $image);
-    }
-
-    public function studentAnswers(){
-        return $this->hasMany(StudentAnswer::class);
+        if($image){
+            return asset('storage/questions/' . $image);
+        }else{
+            return null;
+        }
     }
 }

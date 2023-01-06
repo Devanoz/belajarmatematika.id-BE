@@ -47,7 +47,11 @@ class Student extends Authenticatable implements JWTSubject
      */
     public function getImageAttribute($image)
     {
-        return asset('storage/students/' . $image);
+        if($image){
+            return asset('storage/students/' . $image);
+        }else{
+            return null;
+        }
     }
 
     /**

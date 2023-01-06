@@ -32,7 +32,11 @@ class Materi extends Model
      */
     public function getContentAttribute($content)
     {
-        return asset('storage/materis/' . $content);
+        if($content){
+            return asset('storage/materis/' . $content);
+        }else{
+            return null;
+        }
     }
 }
 
