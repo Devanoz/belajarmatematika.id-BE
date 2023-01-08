@@ -37,7 +37,9 @@ class QuestionController extends Controller
         }else{
             $questions = $questions->paginate(1);
             $challenge['done'] = false;
-            $questions->items()[0]->answer_key = null;
+            if(isset($questions->items()[0]->answer_key)){
+                $questions->items()[0]->answer_key = null;
+            }
             $challenge['questions'] = $questions;
         }
 
