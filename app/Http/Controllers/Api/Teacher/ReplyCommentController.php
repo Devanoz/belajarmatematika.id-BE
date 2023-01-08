@@ -63,7 +63,7 @@ class ReplyCommentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-    //  * @param  int  $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, ReplyComment $replyComment)
@@ -119,7 +119,15 @@ class ReplyCommentController extends Controller
      */
     public function destroy(ReplyComment $replyComment)
     {
+        if(auth()->guard('api_student')->user()->id != $replyComment->student_id){
+            return response()->json([
+                'success' => false,
+                'message' => 'Forbidden access to update replyComment!'
+            ], 403);
+        }
+        
         $comment_id = $replyComment->comment_id;
+
         if($replyComment->delete()) {
             $comment = Comment::whereId($comment_id)->first();
             $video = Video::whereId($comment->video_id)

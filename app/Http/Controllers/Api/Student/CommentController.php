@@ -87,7 +87,7 @@ class CommentController extends Controller
         ]);
 
         if($Comment) {
-            $video = Video::whereId($request->video_id)
+            $video = Video::whereId($Comment->video_id)
             ->with('comments', function($comments){
                 $comments
                 ->with('student')
@@ -116,7 +116,17 @@ class CommentController extends Controller
      */
     public function destroy(Comment $Comment)
     {
-        $video = Video::whereId($Comment->video_id)
+        if(auth()->guard('api_student')->user()->id != $Comment->student_id){
+            return response()->json([
+                'success' => false,
+                'message' => 'Forbidden access to delete Comment!'
+            ], 403);
+        }
+
+        $video_id = $Comment->video_id;
+
+        if($Comment->delete()) {
+            $video = Video::whereId($video_id)
             ->with('comments', function($comments){
                 $comments
                 ->with('student')
@@ -129,7 +139,6 @@ class CommentController extends Controller
                 })->latest();
             })->first();
 
-        if($Comment->delete()) {
             //return success with Api Resource
             return new CommentResource(true, 'Data Comment Berhasil Dihapus!', $video);
         }

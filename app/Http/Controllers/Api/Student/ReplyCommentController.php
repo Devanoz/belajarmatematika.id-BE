@@ -7,6 +7,7 @@ use App\Models\ReplyComment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ReplyCommentResource;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Validator;
 
 class ReplyCommentController extends Controller
@@ -20,7 +21,7 @@ class ReplyCommentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'video_id'  => 'required|exists:videos,id',
+            'comment_id'  => 'required|exists:comments,id',
             'title'     => 'required',
         ]);
 
@@ -30,13 +31,13 @@ class ReplyCommentController extends Controller
 
         //create ReplyComment
         $ReplyComment = ReplyComment::create([
-            'video_id'      => $request->video_id,
+            'comment_id'    => $request->comment_id,
             'student_id'    => auth()->guard('api_student')->user()->id,
             'title'         => $request->title,
         ]);
 
         if($ReplyComment) {
-            $video = Video::whereId($request->video_id)
+            $video = Video::whereId($request->comment_id)
             ->with('comments', function($comments){
                 $comments
                 ->with('student')
@@ -64,7 +65,7 @@ class ReplyCommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ReplyComment $ReplyComment)
+    public function update(Request $request, ReplyComment $replyComment)
     {
         $validator = Validator::make($request->all(), [
             'title'     => 'required',
@@ -74,20 +75,21 @@ class ReplyCommentController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        if(auth()->guard('api_student')->user()->id != $ReplyComment->student_id){
+        if(auth()->guard('api_student')->user()->id != $replyComment->student_id){
             return response()->json([
                 'success' => false,
-                'message' => 'Forbidden access to update ReplyComment!'
+                'message' => 'Forbidden access to update replyComment!'
             ], 403);
         }
 
-        //update ReplyComment
-        $ReplyComment->update([
+        //update replyComment
+        $replyComment->update([
             'title'         => $request->title,
         ]);
 
-        if($ReplyComment) {
-            $video = Video::whereId($request->video_id)
+        if($replyComment) {
+            $comment = Comment::whereId($replyComment->comment_id)->first();
+            $video = Video::whereId($comment->video_id)
             ->with('comments', function($comments){
                 $comments
                 ->with('student')
@@ -114,9 +116,20 @@ class ReplyCommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ReplyComment $ReplyComment)
+    public function destroy(ReplyComment $replyComment)
     {
-        $video = Video::whereId($ReplyComment->video_id)
+        if(auth()->guard('api_student')->user()->id != $replyComment->student_id){
+            return response()->json([
+                'success' => false,
+                'message' => 'Forbidden access to update replyComment!'
+            ], 403);
+        }
+        
+        $comment_id = $replyComment->comment_id;
+
+        if($replyComment->delete()) {
+            $comment = Comment::whereId($comment_id)->first();
+            $video = Video::whereId($comment->video_id)
             ->with('comments', function($comments){
                 $comments
                 ->with('student')
@@ -129,7 +142,6 @@ class ReplyCommentController extends Controller
                 })->latest();
             })->first();
 
-        if($ReplyComment->delete()) {
             //return success with Api Resource
             return new ReplyCommentResource(true, 'Data ReplyComment Berhasil Dihapus!', $video);
         }
