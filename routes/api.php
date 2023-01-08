@@ -45,6 +45,12 @@ Route::prefix('teacher')->group(function () {
         //video
         Route::apiResource('/videos', App\Http\Controllers\Api\Teacher\VideoController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
     
+        //comment
+        Route::apiResource('/comments', App\Http\Controllers\Api\Teacher\CommentController::class, ['except' => ['index', 'show', 'create', 'edit'], 'as' => 'teacher']);
+        
+        //replyComment
+        Route::apiResource('/replyComments', App\Http\Controllers\Api\Teacher\ReplyCommentController::class, ['except' => ['index', 'show', 'create', 'edit'], 'as' => 'teacher']);
+        
         //challenge
         Route::apiResource('/challenges', App\Http\Controllers\Api\Teacher\ChallengeController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
         Route::get('/challengesWithMateri', [App\Http\Controllers\Api\Teacher\ChallengeController::class, 'indexWithMateri', ['as' => 'teacher']]);
@@ -97,7 +103,13 @@ Route::prefix('student')->group(function () {
         
         //video
         Route::apiResource('/videos', App\Http\Controllers\Api\Student\VideoController::class, ['except' => ['store', 'update', 'destroy', 'create', 'edit'], 'as' => 'student']);
-    
+        
+        //comment
+        Route::apiResource('/comments', App\Http\Controllers\Api\Student\CommentController::class, ['except' => ['index', 'show', 'create', 'edit'], 'as' => 'student']);
+        
+        //replyComment
+        Route::apiResource('/replyComments', App\Http\Controllers\Api\Student\ReplyCommentController::class, ['except' => ['index', 'show', 'create', 'edit'], 'as' => 'student']);
+        
         //challenge
         Route::apiResource('/challenges', App\Http\Controllers\Api\Student\ChallengeController::class, ['except' => ['store', 'update', 'destroy','create', 'edit'], 'as' => 'student']);
         Route::get('/challengesWithMateri', [App\Http\Controllers\Api\Student\ChallengeController::class, 'indexWithMateri', ['as' => 'student']]);

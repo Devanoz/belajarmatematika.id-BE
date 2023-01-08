@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Teacher;
 
 use App\Models\Video;
+use App\Models\Comment;
 use App\Models\ReplyComment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -20,7 +21,7 @@ class ReplyCommentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'video_id'  => 'required|exists:videos,id',
+            'comment_id'  => 'required|exists:comments,id',
             'title'     => 'required',
         ]);
 
@@ -30,13 +31,14 @@ class ReplyCommentController extends Controller
 
         //create ReplyComment
         $ReplyComment = ReplyComment::create([
-            'video_id'      => $request->video_id,
+            'comment_id'    => $request->comment_id,
             'teacher_id'    => auth()->guard('api_teacher')->user()->id,
             'title'         => $request->title,
         ]);
 
         if($ReplyComment) {
-            $video = Video::whereId($request->video_id)
+            $comment = Comment::whereId($request->comment_id)->first();
+            $video = Video::whereId($comment->video_id)
             ->with('comments', function($comments){
                 $comments
                 ->with('student')
@@ -66,6 +68,10 @@ class ReplyCommentController extends Controller
      */
     public function update(Request $request, ReplyComment $ReplyComment)
     {
+        return response()->json([
+                'success' => false,
+                'message' => $ReplyComment
+            ], 403);
         $validator = Validator::make($request->all(), [
             'title'     => 'required',
         ]);
@@ -74,7 +80,9 @@ class ReplyCommentController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        if(auth()->guard('api_teacher')->user()->id != $ReplyComment->tecaher_id){
+        
+
+        if(auth()->guard('api_teacher')->user()->id != $ReplyComment->teacher_id){
             return response()->json([
                 'success' => false,
                 'message' => 'Forbidden access to update ReplyComment!'
