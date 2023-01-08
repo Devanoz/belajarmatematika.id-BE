@@ -63,15 +63,11 @@ class ReplyCommentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+    //  * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ReplyComment $ReplyComment)
+    public function update(Request $request, ReplyComment $replyComment)
     {
-        return response()->json([
-                'success' => false,
-                'message' => $ReplyComment
-            ], 403);
         $validator = Validator::make($request->all(), [
             'title'     => 'required',
         ]);
@@ -80,9 +76,7 @@ class ReplyCommentController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        
-
-        if(auth()->guard('api_teacher')->user()->id != $ReplyComment->teacher_id){
+        if(auth()->guard('api_teacher')->user()->id != $replyComment->teacher_id){
             return response()->json([
                 'success' => false,
                 'message' => 'Forbidden access to update ReplyComment!'
@@ -90,12 +84,13 @@ class ReplyCommentController extends Controller
         }
         
         //update ReplyComment 
-        $ReplyComment->update([
+        $replyComment->update([
             'title'         => $request->title,
         ]);
 
-        if($ReplyComment) {
-            $video = Video::whereId($request->video_id)
+        if($replyComment) {
+            $comment = Comment::whereId($replyComment->comment_id)->first();
+            $video = Video::whereId($comment->video_id)
             ->with('comments', function($comments){
                 $comments
                 ->with('student')
@@ -122,9 +117,12 @@ class ReplyCommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ReplyComment $ReplyComment)
+    public function destroy(ReplyComment $replyComment)
     {
-        $video = Video::whereId($ReplyComment->video_id)
+        $comment_id = $replyComment->comment_id;
+        if($replyComment->delete()) {
+            $comment = Comment::whereId($comment_id)->first();
+            $video = Video::whereId($comment->video_id)
             ->with('comments', function($comments){
                 $comments
                 ->with('student')
@@ -137,7 +135,6 @@ class ReplyCommentController extends Controller
                 })->latest();
             })->first();
 
-        if($ReplyComment->delete()) {
             //return success with Api Resource
             return new ReplyCommentResource(true, 'Data ReplyComment Berhasil Dihapus!', $video);
         }
