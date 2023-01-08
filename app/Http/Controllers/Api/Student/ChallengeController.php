@@ -51,7 +51,10 @@ class ChallengeController extends Controller
      */
     public function show($id)
     {
-        $challenge = Challenge::with('materi')->whereId($id)->first();
+        $challenge = Challenge::whereId($id)
+        ->with('studentChallenges', function($studentChallenge){
+            $studentChallenge->where('student_id', auth()->guard('api_student')->user()->id);
+        })->first();
         
         if($challenge) {
             //return success with Api Resource
