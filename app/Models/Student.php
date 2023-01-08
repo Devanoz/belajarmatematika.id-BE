@@ -6,7 +6,7 @@ use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use Illuminate\Support\Carbon;
 
 class Student extends Authenticatable implements JWTSubject
 {
@@ -72,5 +72,15 @@ class Student extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+    
+    public function getCreatedAtAttribute($created_at)
+    {
+        return Carbon::parse($created_at)->format('Y-m-d');
+    }   
+
+    public function getUpdatedAtAttribute($updated_at)
+    {
+        return Carbon::parse($updated_at)->format('Y-m-d');
     }
 }

@@ -36,7 +36,7 @@ class StudentChallengeController extends Controller
         if(StudentChallenge::where('student_id', $student_id)->where('challenge_id', request()->challenge_id)->first()){
             return response()->json([
                 'success' => false,
-                'message' => 'Soal sudah Dikerjakan Semua'
+                'message' => 'Challenge sudah Dikerjakan'
             ], 403);
         }
 
@@ -56,13 +56,20 @@ class StudentChallengeController extends Controller
             ], 403);
         }
 
-       $score =  100 * ($challenge[0]->correct / $challenge[0]->questions);
-
         $studentChallenge = StudentChallenge::create([
-                'student_id'    => $student_id,
-                'challenge_id'  => request()->challenge_id,
-                'score'         => $score,
-            ]);
+                'student_id'        => $student_id,
+                'challenge_id'      => request()->challenge_id,
+                'score'             => 100 * ($challenge[0]->correct / $challenge[0]->questions),
+        ]);
+
+        //get question
+        $questions = Question::with('options')->with('studentAnswers', function ($studentAnswer){
+            $studentAnswer->where('student_id', auth()->guard('api_student')->user()->id);
+        })->where('challenge_id', $request->challenge_id)->latest()->get();
+
+        $studentChallenge['correct_answer'] = $challenge[0]->correct;
+        $studentChallenge['total_question'] = $challenge[0]->questions;
+        $studentChallenge['questions'] = $questions;
 
         if ($studentChallenge) {
             //return with Api Resource

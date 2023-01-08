@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\StudentAnswerResource;
 use App\Models\Question;
 use App\Models\Challenge;
+use App\Models\StudentChallenge;
 use App\Models\StudentAnswer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -29,6 +30,15 @@ class StudentAnswerController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
+        $challenge_id = Question::where('id', $request->question_id)->first()->challenge_id;
+
+        if(StudentChallenge::where('student_id', auth()->guard('api_student')->user()->id)->where('challenge_id', $challenge_id)->first()){
+            return response()->json([
+                'success' => false,
+                'message' => 'Challenge sudah Dikerjakan'
+            ], 403);
+        }
+
         $student_id = auth()->guard('api_student')->user()->id;
 
         $student_answer = StudentAnswer::where('question_id', $request->question_id)
@@ -46,8 +56,6 @@ class StudentAnswerController extends Controller
             ]);
         }
 
-        $challenge_id = Question::where('id', $request->question_id)->first()->challenge_id;
-
         if($new_student_answer){
             //get challenge
             $challenge = Challenge::whereId($challenge_id)->first();
@@ -55,13 +63,11 @@ class StudentAnswerController extends Controller
             //get question
             $questions = Question::with('options')->with('studentAnswers', function ($studentAnswer){
                 $studentAnswer->where('student_id', auth()->guard('api_student')->user()->id);
-            })->where('challenge_id', $challenge_id)->latest()->get();
+            })->where('challenge_id', $challenge_id)->latest()->paginate(1);
 
-            $questions = array_map(function ($questions) {
-                unset($questions['answer_key']);
-                return $questions;
-            }, $questions->toArray());
+            $questions->items()[0]->answer_key = null;
 
+            $challenge['done'] = false;
             $challenge['questions'] = $questions;
 
             //return with Api Resource

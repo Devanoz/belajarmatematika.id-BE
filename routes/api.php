@@ -99,7 +99,7 @@ Route::prefix('student')->group(function () {
         Route::apiResource('/videos', App\Http\Controllers\Api\Student\VideoController::class, ['except' => ['store', 'update', 'destroy', 'create', 'edit'], 'as' => 'student']);
     
         //challenge
-        Route::get('/challenges', [App\Http\Controllers\Api\Student\ChallengeController::class, 'index'], ['as' => 'student']);
+        Route::apiResource('/challenges', App\Http\Controllers\Api\Student\ChallengeController::class, ['except' => ['store', 'update', 'destroy','create', 'edit'], 'as' => 'student']);
         Route::get('/challengesWithMateri', [App\Http\Controllers\Api\Student\ChallengeController::class, 'indexWithMateri', ['as' => 'student']]);
     
         //question

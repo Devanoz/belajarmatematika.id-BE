@@ -42,4 +42,23 @@ class ChallengeController extends Controller
         //return with Api Resource
         return new ChallengeResource(true, 'List Data Challenge With Materi', $challenge);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $challenge = Challenge::with('materi')->whereId($id)->first();
+        
+        if($challenge) {
+            //return success with Api Resource
+            return new ChallengeResource(true, 'Detail Data Challenge!', $challenge);
+        }
+
+        //return failed with Api Resource
+        return new ChallengeResource(false, 'Detail Data Challenge Tidak DItemukan!', null);
+    }
 }

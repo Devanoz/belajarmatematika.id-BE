@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Question extends Model
 {
@@ -32,5 +33,15 @@ class Question extends Model
         }else{
             return null;
         }
+    }
+
+    public function getCreatedAtAttribute($created_at)
+    {
+        return Carbon::parse($created_at)->format('Y-m-d');
+    }   
+
+    public function getUpdatedAtAttribute($updated_at)
+    {
+        return Carbon::parse($updated_at)->format('Y-m-d');
     }
 }
