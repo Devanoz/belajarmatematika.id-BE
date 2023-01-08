@@ -18,9 +18,11 @@ class StudentChallengeSeeder extends Seeder
         for($i = 2; $i <= 20; $i++) {
             for ($j = 1; $j <= 15; $j++) {
                 DB::table('student_challenges')->insert([
-                    'student_id'    => $i,
-                    'challenge_id'  => $j,
-                    'score' => ($i + $j) + 65
+                    'student_id'        => $i,
+                    'challenge_id'      => $j,
+                    'score'             => ($i + $j) + 65,
+                    'correct_answer'    => 2,
+                    'total_question'    => 3
                 ]);
             }
         }

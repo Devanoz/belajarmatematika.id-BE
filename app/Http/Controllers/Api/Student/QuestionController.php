@@ -27,20 +27,13 @@ class QuestionController extends Controller
         ->latest()
         ;
 
-        if(StudentChallenge::where('student_id', auth()->guard('api_student')->user()->id)->where('challenge_id', request()->challenge_id)->first()){
-            $studentChallenge = DB::select(
-                "SELECT 
-                COUNT(IF(answer IS NOT NULL, 1, NULL)) AS 'done', 
-                COUNT(q.id) AS 'questions',
-                COUNT(IF(q.answer_key = sa.answer, 1, NULL)) AS'correct'
-                FROM challenges c LEFT JOIN questions q ON(c.id = q.challenge_id) LEFT JOIN student_answers sa ON(q.id = sa.question_id)
-                WHERE c.id = " . request()->challenge_id . " AND (sa.student_id IS NULL OR sa.student_id = " . auth()->guard('api_student')->user()->id . ")"
-            );
+        $studentChallenge = StudentChallenge::where('student_id', auth()->guard('api_student')->user()->id)->where('challenge_id', request()->challenge_id)->first();
 
+        if($studentChallenge){
             $challenge['done'] = true;
-            $challenge['score'] = 100 * ($studentChallenge[0]->correct / $studentChallenge[0]->questions);
-            $challenge['correct_answer'] = $studentChallenge[0]->correct;
-            $challenge['total_question'] = $studentChallenge[0]->questions;
+            $challenge['score'] = $studentChallenge->score;
+            $challenge['correct_answer'] = $studentChallenge->correct_answer;
+            $challenge['total_question'] = $studentChallenge->total_question;
             $challenge['questions'] = $questions->get();
         }else{
             $questions = $questions->paginate(1);

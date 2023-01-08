@@ -10,7 +10,7 @@ class StudentChallenge extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['challenge_id', 'student_id', 'score'];
+    protected $fillable = ['challenge_id', 'student_id', 'score', 'correct_answer', 'total_question'];
 
     public function student(){
         return $this->belongsTo(Student::class);

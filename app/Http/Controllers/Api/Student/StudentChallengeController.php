@@ -60,6 +60,8 @@ class StudentChallengeController extends Controller
                 'student_id'        => $student_id,
                 'challenge_id'      => request()->challenge_id,
                 'score'             => 100 * ($challenge[0]->correct / $challenge[0]->questions),
+                'correct_answer'    => $challenge[0]->correct,
+                'total_question'    => $challenge[0]->questions,
         ]);
 
         //get question
@@ -67,8 +69,6 @@ class StudentChallengeController extends Controller
             $studentAnswer->where('student_id', auth()->guard('api_student')->user()->id);
         })->where('challenge_id', $request->challenge_id)->latest()->get();
 
-        $studentChallenge['correct_answer'] = $challenge[0]->correct;
-        $studentChallenge['total_question'] = $challenge[0]->questions;
         $studentChallenge['questions'] = $questions;
 
         if ($studentChallenge) {

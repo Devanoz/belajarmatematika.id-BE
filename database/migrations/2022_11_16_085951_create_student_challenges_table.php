@@ -18,6 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('challenge_id');
             $table->integer('score');
+            $table->integer('correct_answer');
+            $table->integer('total_question');
             $table->timestamps();
 
             //relationship to students
