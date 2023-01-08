@@ -37,7 +37,7 @@ class QuestionController extends Controller
         }else{
             $questions = $questions->get();
             $challenge['done'] = false;
-            if(isset($questions->items()[0]->answer_key)){
+            if(isset($questions->answer_key)){
                 $questions->items()[0]->answer_key = null;
             }
             $challenge['questions'] = $questions;
