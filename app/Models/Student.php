@@ -39,6 +39,10 @@ class Student extends Authenticatable implements JWTSubject
         return $this->hasMany(StudentChallenge::class);
     }
 
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
+
     /**
      * getImageAttribute
      *

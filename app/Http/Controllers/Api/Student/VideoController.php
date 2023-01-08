@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\VideoResource;
 use App\Models\Video;
 use App\Models\Materi;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class VideoController extends Controller
@@ -38,9 +39,34 @@ class VideoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // ->when('teacher_id', function($comment){
+            //     $comment->with('teacher')->get();
+            // })
+            // ->when($comments->student_id, function($comment){
+            //     $comment->with('student')->get();
+            // })
+            
+            // if($comments->get()[0]) {
+            //     $comments->with('student');
+            // }
+
+            // $comments->when($comments->has('student_id'), function($comment){
+            //     $comment->with('student')->get();
+            // });
     public function show($id)
     {
-        $video = Video::whereId($id)->first();
+        $video = Video::whereId($id)
+        ->with('comments', function($comments){
+            $comments
+            ->with('student')
+            ->with('teacher')
+            ->with('replyComments', function($replyComments){
+                $replyComments
+                ->with('student')
+                ->with('teacher')
+                ->oldest();
+            })->latest();
+        })->first();
         
         if($video) {
             //return success with Api Resource

@@ -6,28 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
-class Video extends Model
+class ReplyComment extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'title', 
-        'slug',
-        'url',
-        'materi_id',
-    ];   
+    protected $fillable = ['comment_id', 'teacher_id', 'student_id', 'title'];
 
-    public function comments(){
-        return $this->hasMany(Comment::class);
+    public function teacher(){
+        return $this->belongsTo(Teacher::class);
     }
 
-    public function getUrlAttribute($url)
-    {
-        if($url){
-            return str_replace('https://www.youtube.com/watch?v=', 'https://www.youtube.com/embed/', $url);
-        }else{
-            return null;
-        }
+    public function student(){
+        return $this->belongsTo(Student::class);
     }
 
     public function getCreatedAtAttribute($created_at)

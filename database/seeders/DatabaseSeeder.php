@@ -28,6 +28,8 @@ class DatabaseSeeder extends Seeder
             QuestionSeeder::class,
             OptionSeeder::class,
             StudentChallengeSeeder::class,
+            CommentSeeder::class,
+            ReplyCommentSeeder::class,
         ]);
     }
 }
