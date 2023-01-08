@@ -25,7 +25,7 @@ class ChallengeController extends Controller
         })->with('challenges', function($challenge){
             $challenge->when(request()->title, function($challenge) {
                 $challenge->where('title', 'like', '%' . request()->title . '%');
-            });
+            })->withCount('questions');
         })->latest()->paginate(10);
 
         // Paginator::make($challenge->toArray(), $challenge->count(), 10);
