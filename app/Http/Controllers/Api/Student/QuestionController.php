@@ -24,7 +24,7 @@ class QuestionController extends Controller
         ->with(['studentAnswers' => function ($studentAnswer){
             $studentAnswer->where('student_id', auth()->guard('api_student')->user()->id);
         }])->where('challenge_id', request()->challenge_id)
-        ->latest();
+        ->oldest();
 
         $studentChallenge = StudentChallenge::where('student_id', auth()->guard('api_student')->user()->id)->where('challenge_id', request()->challenge_id)->first();
 
