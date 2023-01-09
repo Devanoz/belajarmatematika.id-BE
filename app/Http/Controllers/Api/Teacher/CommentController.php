@@ -46,7 +46,7 @@ class CommentController extends Controller
                     ->with('student')
                     ->with('teacher')
                     ->oldest();
-                })->latest();
+                })->oldest();
             })->first();
 
             //return success with Api Resource
@@ -97,7 +97,7 @@ class CommentController extends Controller
                     ->with('student')
                     ->with('teacher')
                     ->oldest();
-                })->latest();
+                })->oldest();
             })->first();
 
             //return success with Api Resource
@@ -136,7 +136,7 @@ class CommentController extends Controller
                     ->with('student')
                     ->with('teacher')
                     ->oldest();
-                })->latest();
+                })->oldest();
             })->first();
 
             //return success with Api Resource

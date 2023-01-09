@@ -47,7 +47,7 @@ class ReplyCommentController extends Controller
                     ->with('student')
                     ->with('teacher')
                     ->oldest();
-                })->latest();
+                })->oldest();
             })->first();
 
             //return success with Api Resource
@@ -99,7 +99,7 @@ class ReplyCommentController extends Controller
                     ->with('student')
                     ->with('teacher')
                     ->oldest();
-                })->latest();
+                })->oldest();
             })->first();
 
             //return success with Api Resource
@@ -139,7 +139,7 @@ class ReplyCommentController extends Controller
                     ->with('student')
                     ->with('teacher')
                     ->oldest();
-                })->latest();
+                })->oldest();
             })->first();
 
             //return success with Api Resource

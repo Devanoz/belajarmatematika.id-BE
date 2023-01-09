@@ -65,7 +65,7 @@ class VideoController extends Controller
                 ->with('student')
                 ->with('teacher')
                 ->oldest();
-            })->latest();
+            })->oldest();
         })->first();
         
         if($video) {
