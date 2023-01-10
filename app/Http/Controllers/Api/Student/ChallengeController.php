@@ -22,9 +22,20 @@ class ChallengeController extends Controller
         })->when(request()->materi_id, function ($challenge) {
             $challenge = $challenge->where('materi_id', request()->materi_id);
         })->withCount('questions')
-        ->with('studentChallenges', function ($challenge){
-            $challenge = $challenge->where('student_id', auth()->guard('api_student')->user()->id);
-        })->latest()->get();
+        ->when(request()->done == true, function($challenge){
+            $challenge = $challenge->whereHas('studentChallenges', function ($challenge){
+                $challenge = $challenge->where('student_id', auth()->guard('api_student')->user()->id);
+            })
+            ->with('studentChallenges', function ($challenge){
+                $challenge = $challenge->where('student_id', auth()->guard('api_student')->user()->id);
+            });
+        })
+        ->when(! request()->done == true, function($challenge){
+            $challenge = $challenge->whereDoesntHave('studentChallenges', function($challenge){
+                $challenge = $challenge->where('student_id', auth()->guard('api_student')->user()->id);
+            });
+        })
+        ->latest()->get();
 
         //return with Api Resource
         return new ChallengeResource(true, 'List Data Challenge', $challenge);
