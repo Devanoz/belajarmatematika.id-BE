@@ -35,9 +35,9 @@ class QuestionController extends Controller
             $challenge['total_question'] = $studentChallenge->total_question;
             $challenge['questions'] = $questions->get();
         }else{
-            $questions = $questions->get();
+            $questions = $questions->paginate(1);
             $challenge['done'] = false;
-            if(isset($questions->answer_key)){
+            if(isset($questions->items()[0]->answer_key)){
                 $questions->items()[0]->answer_key = null;
             }
             $challenge['questions'] = $questions;
