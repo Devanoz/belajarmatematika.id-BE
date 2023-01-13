@@ -21,7 +21,9 @@ class ChallengeController extends Controller
             $challenge = $challenge->where('title', 'like', '%' . request()->title . '%');
         })->when(request()->materi_id, function ($challenge) {
             $challenge = $challenge->where('materi_id', request()->materi_id);
-        })->withCount('questions')
+        })
+        ->withCount('questions')
+        ->whereHas('questions')
         ->when(request()->done == true, function($challenge){
             $challenge = $challenge->whereHas('studentChallenges', function ($challenge){
                 $challenge = $challenge->where('student_id', auth()->guard('api_student')->user()->id);
