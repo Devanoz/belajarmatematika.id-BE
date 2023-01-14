@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\StudentChallengeResource;
+use App\Models\Challenge;
 use App\Models\Question;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -64,16 +65,23 @@ class StudentChallengeController extends Controller
                 'total_question'    => $challenge[0]->questions,
         ]);
 
-        //get question
-        $questions = Question::with('options')->with('studentAnswers', function ($studentAnswer){
+        $challenge = Challenge::whereId($request->challenge_id)->with('materi')->first();
+        $questions = Question::with('options')
+        ->with(['studentAnswers' => function ($studentAnswer){
             $studentAnswer->where('student_id', auth()->guard('api_student')->user()->id);
-        })->where('challenge_id', $request->challenge_id)->latest()->get();
+        }])->where('challenge_id', $request->challenge_id)
+        ->oldest();
 
-        $studentChallenge['questions'] = $questions;
+        // $studentChallenge = StudentChallenge::where('student_id', auth()->guard('api_student')->user()->id)->where('challenge_id', request()->challenge_id)->first();
 
         if ($studentChallenge) {
+            $challenge['done'] = true;
+            $challenge['score'] = $studentChallenge->score;
+            $challenge['correct_answer'] = $studentChallenge->correct_answer;
+            $challenge['total_question'] = $studentChallenge->total_question;
+            $challenge['questions'] = $questions->get();
             //return with Api Resource
-            return new StudentChallengeResource(true, 'Submit StudentChallenge Berhasil', $studentChallenge);
+            return new StudentChallengeResource(true, 'Submit StudentChallenge Berhasil', $challenge);
         }
 
         //return failed with Api Resource

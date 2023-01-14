@@ -58,7 +58,7 @@ class StudentAnswerController extends Controller
 
         if($new_student_answer){
             //get challenge
-            $challenge = Challenge::whereId($challenge_id)->first();
+            $challenge = Challenge::whereId($challenge_id)->with('materi')->first();
 
             //get question
             $questions = Question::with('options')->with('studentAnswers', function ($studentAnswer){

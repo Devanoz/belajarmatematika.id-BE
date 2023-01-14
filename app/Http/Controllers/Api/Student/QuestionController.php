@@ -19,7 +19,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $challenge = Challenge::whereId(request()->challenge_id)->first();
+        $challenge = Challenge::whereId(request()->challenge_id)->with('materi')->first();
         $questions = Question::with('options')
         ->with(['studentAnswers' => function ($studentAnswer){
             $studentAnswer->where('student_id', auth()->guard('api_student')->user()->id);
