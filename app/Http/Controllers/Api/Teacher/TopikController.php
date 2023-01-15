@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TopikResource;
+use App\Models\Kelas;
 use Illuminate\Support\Facades\Validator;
 
 class TopikController extends Controller
@@ -19,11 +20,15 @@ class TopikController extends Controller
     public function index()
     {
         //get topiks
-        $topiks = topik::when(request()->title, function($topiks) {
-            $topiks = $topiks->where('title', 'like', '%'. request()->title . '%');
-        })->when(request()->kelas_id, function ($topiks) {
-            $topiks = $topiks->where('kelas_id', request()->kelas_id);
-        })->latest()->paginate(5);
+        $topiks = Kelas::when(request()->kelas_id, function ($kelas) {
+           $kelas->where('kelas_id', request()->kelas_id);
+        })
+        ->with('topiks', function($topiks){
+            $topiks->when(request()->title, function($topiks) {
+                $topiks->where('title', 'like', '%'. request()->title . '%');
+            })->latest();
+        })
+        ->get();
         
         //return with Api Resource
         return new TopikResource(true, 'List Data topiks', $topiks);
