@@ -47,6 +47,8 @@ class TopikController extends Controller
         //get topiks
         $topiks = Topik::with('materis')->when(request()->title, function ($topiks) {
             $topiks = $topiks->where('title', 'like', '%' . request()->title . '%');
+        })->when(request()->title, function($topiks) {
+            $topiks->where('title', 'like', '%'. request()->title . '%');
         })->when(request()->kelas_id, function ($topiks) {
             $topiks = $topiks->where('kelas_id', request()->kelas_id);
         })->latest()->get();
