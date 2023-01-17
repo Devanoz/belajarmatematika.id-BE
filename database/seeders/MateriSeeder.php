@@ -16,6 +16,27 @@ class MateriSeeder extends Seeder
     public function run()
     {
         DB::table('materis')->insert([
+            'title' => 'Keliling Segitiga',
+            'slug' => 'keliling-segitiga',
+            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
+            'topik_id' => 1,
+        ]);
+
+        DB::table('materis')->insert([
+            'title' => 'Keliling Persegi',
+            'slug' => 'keliling-persegi',
+            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
+            'topik_id' => 1,
+        ]);
+
+        DB::table('materis')->insert([
+            'title' => 'Keliling Persegi Panjang',
+            'slug' => 'keliling-persegi-panjang',
+            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
+            'topik_id' => 1,
+        ]);
+
+        DB::table('materis')->insert([
             'title' => 'Volume Kubus',
             'slug' => 'volume-kubus',
             'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',

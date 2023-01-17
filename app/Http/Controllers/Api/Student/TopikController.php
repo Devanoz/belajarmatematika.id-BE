@@ -45,13 +45,15 @@ class TopikController extends Controller
     public function indexWithMateris()
     {
         //get topiks
-        $topiks = Topik::with('materis')->when(request()->title, function ($topiks) {
-            $topiks = $topiks->where('title', 'like', '%' . request()->title . '%');
-        })->when(request()->title, function($topiks) {
-            $topiks->where('title', 'like', '%'. request()->title . '%');
-        })->when(request()->kelas_id, function ($topiks) {
+        $topiks = Topik::when(request()->kelas_id, function ($topiks) {
             $topiks = $topiks->where('kelas_id', request()->kelas_id);
-        })->latest()->get();
+        })
+        ->with('materis', function($materis){
+            $materis->when(request()->title, function ($materis) {
+                $materis->where('title', 'like', '%' . request()->title . '%')->latest();
+            })->latest();
+        })
+        ->latest()->get();
 
         //return with Api Resource
         return new TopikResource(true, 'List Data topiks with Materi', $topiks);

@@ -39,20 +39,7 @@ class VideoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // ->when('teacher_id', function($comment){
-            //     $comment->with('teacher')->get();
-            // })
-            // ->when($comments->student_id, function($comment){
-            //     $comment->with('student')->get();
-            // })
-            
-            // if($comments->get()[0]) {
-            //     $comments->with('student');
-            // }
 
-            // $comments->when($comments->has('student_id'), function($comment){
-            //     $comment->with('student')->get();
-            // });
     public function show($id)
     {
         $video = Video::whereId($id)
