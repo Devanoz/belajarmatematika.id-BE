@@ -26,7 +26,7 @@ class TopikController extends Controller
         ->with('topiks', function($topiks){
             $topiks->when(request()->title, function($topiks) {
                 $topiks->where('title', 'like', '%'. request()->title . '%');
-            })->latest();
+            })->oldest();
         })
         ->get();
         
