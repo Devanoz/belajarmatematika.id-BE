@@ -31,7 +31,7 @@ class TopikController extends Controller
             $topiks = $topiks->where('title', 'like', '%' . request()->title . '%');
         })->when(request()->kelas_id, function ($topiks) {
             $topiks = $topiks->where('kelas_id', request()->kelas_id);
-        })->latest()->get();
+        })->oldest()->get();
 
         //return with Api Resource
         return new TopikResource(true, 'List Data topiks', $topiks);
@@ -51,9 +51,9 @@ class TopikController extends Controller
         ->with('materis', function($materis){
             $materis->when(request()->title, function ($materis) {
                 $materis->where('title', 'like', '%' . request()->title . '%')->latest();
-            })->latest();
+            })->oldest();
         })
-        ->latest()->get();
+        ->oldest()->get();
 
         //return with Api Resource
         return new TopikResource(true, 'List Data topiks with Materi', $topiks);

@@ -68,7 +68,7 @@ class ChallengeController extends Controller
                 });
             })
             ->oldest();
-        })->latest()->get();
+        })->oldest()->get();
 
         //return with Api Resource
         return new ChallengeResource(true, 'List Data Challenge', $challenge);
