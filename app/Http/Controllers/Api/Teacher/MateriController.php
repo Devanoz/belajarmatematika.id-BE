@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MateriResource;
+use App\Models\Topik;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -20,10 +21,14 @@ class MateriController extends Controller
     public function index()
     {//get materi
         $materi = Materi::when(request()->title, function($materi) {
-            $materi = $materi->where('title', 'like', '%'. request()->title . '%');
+            $materi->where('title', 'like', '%'. request()->title . '%');
         })->when(request()->topik_id, function($materi) {
-            $materi = $materi->where('topik_id', request()->topik_id);
-        })->latest()->paginate(10);
+            $materi->where('topik_id', request()->topik_id);
+        })->when(request()->kelas_id, function($materi) {
+            $materi->whereIn(
+                'topik_id', Topik::where('kelas_id', request()->kelas_id)->pluck('id')->toArray()
+            );
+        })->latest()->get();
         
         
         //return with Api Resource

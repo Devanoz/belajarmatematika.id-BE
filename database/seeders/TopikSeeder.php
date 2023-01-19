@@ -18,7 +18,7 @@ class TopikSeeder extends Seeder
         DB::table('topiks')->insert([
             'title' => 'Keliling Bangun Datar',
             'slug' => 'keliling-bangun-datar',
-            'kelas_id' => 2,
+            'kelas_id' => 1,
         ]);
 
         DB::table('topiks')->insert([
@@ -30,7 +30,7 @@ class TopikSeeder extends Seeder
         DB::table('topiks')->insert([
             'title' => 'Volume Bangun Ruang',
             'slug' => 'volume-bangun-ruang',
-            'kelas_id' => 2,
+            'kelas_id' => 3,
         ]);
     }
 }

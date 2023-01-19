@@ -26,7 +26,11 @@ class Materi extends Model
         return $this->hasMany(Challenge::class);
     }
 
-        /**
+    public function topik(){
+        return $this->belongsTo(Topik::class);
+    }
+
+    /**
      * getImageAttribute
      *
      * @param  mixed $image

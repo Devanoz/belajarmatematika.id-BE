@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Student;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MateriResource;
 use App\Models\Materi;
+use App\Models\Topik;
 use Illuminate\Http\Request;
 
 class MateriController extends Controller
@@ -18,9 +19,13 @@ class MateriController extends Controller
     {
         //get materi
         $materi = Materi::when(request()->title, function($materi) {
-            $materi = $materi->where('title', 'like', '%'. request()->title . '%');
+            $materi->where('title', 'like', '%'. request()->title . '%');
         })->when(request()->topik_id, function($materi) {
-            $materi = $materi->where('topik_id', request()->topik_id);
+            $materi->where('topik_id', request()->topik_id);
+        })->when(request()->kelas_id, function($materi) {
+            $materi->whereIn(
+                'topik_id', Topik::where('kelas_id', request()->kelas_id)->pluck('id')->toArray()
+            );
         })->latest()->get();
         
         //return with Api Resource

@@ -37,6 +37,27 @@ class MateriSeeder extends Seeder
         ]);
 
         DB::table('materis')->insert([
+            'title' => 'Luas Segitiga',
+            'slug' => 'luas-segitiga',
+            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
+            'topik_id' => 2,
+        ]);
+
+        DB::table('materis')->insert([
+            'title' => 'Luas Persegi',
+            'slug' => 'luas-persegi',
+            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
+            'topik_id' => 2,
+        ]);
+
+        DB::table('materis')->insert([
+            'title' => 'Luas Persegi Panjang',
+            'slug' => 'luas-persegi-panjang',
+            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
+            'topik_id' => 2,
+        ]);
+
+        DB::table('materis')->insert([
             'title' => 'Volume Kubus',
             'slug' => 'volume-kubus',
             'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
