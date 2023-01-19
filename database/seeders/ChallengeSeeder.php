@@ -16,44 +16,26 @@ class ChallengeSeeder extends Seeder
      */
     public function run()
     {
-        for($i = 1; $i <= 3; $i++){
-            DB::table('challenges')->insert([
-                'title' => 'Volume Kubus ' . $i,
-                'slug' => Str::slug('Volume Kubus ' . $i, '-'),
-                'materi_id' => 1,
-            ]);
-        }
+        $title = [
+            'Keliling Segitiga',
+            'Keliling Persegi',
+            'Keliling Persegi Panjang',
+            'Luas Segitiga',
+            'Luas Persegi',
+            'Luas Persegi Panjang',
+            'Volume Kubus',
+            'Volume Balok',
+            'Volume Bola',
+        ];
 
-        for($i = 1; $i <= 3; $i++){
-            DB::table('challenges')->insert([
-                'title' => 'Volume Balok ' . $i,
-                'slug' => Str::slug('Volume Balok ' . $i, '-'),
-                'materi_id' => 2,
-            ]);
-        }
-        
-        for($i = 1; $i <= 3; $i++){
-            DB::table('challenges')->insert([
-                'title' => 'Volume Kerucut ' . $i,
-                'slug' => Str::slug('Volume Kerucut ' . $i, '-'),
-                'materi_id' => 3,
-            ]);
-        }
-
-        for($i = 1; $i <= 3; $i++){
-            DB::table('challenges')->insert([
-                'title' => 'Volume Limas ' . $i,
-                'slug' => Str::slug('Volume Limas ' . $i, '-'),
-                'materi_id' => 4,
-            ]);
-        }
-
-        for($i = 1; $i <= 3; $i++){
-            DB::table('challenges')->insert([
-                'title' => 'Volume Bola ' . $i,
-                'slug' => Str::slug('Volume Bola ' . $i, '-'),
-                'materi_id' => 5,
-            ]);
+        for($i = 1; $i <= count($title); $i++){
+            for($j = 1; $j <= 3; $j++){
+                DB::table('challenges')->insert([
+                    'title' => $title[$i - 1] . ' ' . $j,
+                    'slug' => Str::slug($title[$i - 1] . ' ' . $j, '-'),
+                    'materi_id' => $i,
+                ]);
+            }
         }
     }
 }

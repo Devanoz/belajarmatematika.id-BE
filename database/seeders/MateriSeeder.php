@@ -72,20 +72,6 @@ class MateriSeeder extends Seeder
         ]);
 
         DB::table('materis')->insert([
-            'title' => 'Volume Kerucut',
-            'slug' => 'volume-kerucut',
-            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
-            'topik_id' => 3,
-        ]);
-
-        DB::table('materis')->insert([
-            'title' => 'Volume Limas',
-            'slug' => 'volume-limas',
-            'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
-            'topik_id' => 3,
-        ]);
-
-        DB::table('materis')->insert([
             'title' => 'Volume Bola',
             'slug' => 'volume-bola',
             'content' =>'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',

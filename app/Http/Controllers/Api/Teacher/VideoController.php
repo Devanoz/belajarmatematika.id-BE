@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\VideoResource;
+use App\Models\Topik;
 use Illuminate\Support\Facades\Validator;
 
 class VideoController extends Controller
@@ -20,15 +21,17 @@ class VideoController extends Controller
     public function index()
     {
         //get video
-        $video = Materi::with('videos')->when(request()->title, function($query) {
-            $query = $query->where('title', 'like', '%'. request()->title . '%');
-        })->latest()->paginate(10);
-
-        // $video = Video::when(request()->title, function($video) {
-        //     $video = $video->where('title', 'like', '%'. request()->title . '%');
-        // })->when(request()->materi_id, function($video) {
-        //     $video = $video->where('materi_id', request()->materi_id);
-        // })->latest()->paginate(10);
+        $video = Materi::when(request()->materi_id, function($materi) {
+            $materi->where('id', request()->materi_id);
+        })->when(request()->kelas_id, function($materi) {
+            $materi->whereIn(
+                'topik_id', Topik::where('kelas_id', request()->kelas_id)->pluck('id')->toArray()
+            );
+        })->with('videos', function($videos){
+            $videos->when(request()->title, function($video) {
+                $video->where('title', 'like', '%'. request()->title . '%');
+            });
+        })->latest()->get();
         
         //return with Api Resource
         return new VideoResource(true, 'List Data Video', $video);

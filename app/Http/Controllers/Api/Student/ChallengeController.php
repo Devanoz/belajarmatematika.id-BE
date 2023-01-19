@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\Student;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ChallengeResource;
 use App\Models\Challenge;
+use App\Models\Materi;
+use App\Models\Topik;
 use Illuminate\Http\Request;
 
 class ChallengeController extends Controller
@@ -17,27 +19,55 @@ class ChallengeController extends Controller
     public function index()
     {
         //get challenge
-        $challenge = Challenge::when(request()->title, function ($challenge) {
-            $challenge = $challenge->where('title', 'like', '%' . request()->title . '%');
-        })->when(request()->materi_id, function ($challenge) {
-            $challenge = $challenge->where('materi_id', request()->materi_id);
-        })
-        ->withCount('questions')
-        ->whereHas('questions')
-        ->when(request()->done == true, function($challenge){
-            $challenge = $challenge->whereHas('studentChallenges', function ($challenge){
-                $challenge = $challenge->where('student_id', auth()->guard('api_student')->user()->id);
+        // $challenge = Challenge::when(request()->title, function ($challenge) {
+        //     $challenge->where('title', 'like', '%' . request()->title . '%');
+        // })->when(request()->materi_id, function ($challenge) {
+        //     $challenge->where('materi_id', request()->materi_id);
+        // })
+        // ->withCount('questions')
+        // ->whereHas('questions')
+        // ->when(request()->done == true, function($challenge){
+        //     $challenge->whereHas('studentChallenges', function ($challenge){
+        //         $challenge->where('student_id', auth()->guard('api_student')->user()->id);
+        //     })
+        //     ->with('studentChallenges', function ($challenge){
+        //         $challenge->where('student_id', auth()->guard('api_student')->user()->id);
+        //     });
+        // })
+        // ->when(! request()->done == true, function($challenge){
+        //     $challenge->whereDoesntHave('studentChallenges', function($challenge){
+        //         $challenge->where('student_id', auth()->guard('api_student')->user()->id);
+        //     });
+        // })
+        // ->latest()->get();
+
+        $challenge = Materi::when(request()->materi_id, function($challenge) {
+            $challenge->where('id', request()->materi_id);
+        })->when(request()->kelas_id, function($materi) {
+            $materi->whereIn(
+                'topik_id', Topik::where('kelas_id', request()->kelas_id)->pluck('id')->toArray()
+            );
+        })->with('challenges', function($challenge){
+            $challenge->when(request()->title, function($challenge) {
+                $challenge->where('title', 'like', '%' . request()->title . '%');
             })
-            ->with('studentChallenges', function ($challenge){
-                $challenge = $challenge->where('student_id', auth()->guard('api_student')->user()->id);
-            });
-        })
-        ->when(! request()->done == true, function($challenge){
-            $challenge = $challenge->whereDoesntHave('studentChallenges', function($challenge){
-                $challenge = $challenge->where('student_id', auth()->guard('api_student')->user()->id);
-            });
-        })
-        ->latest()->get();
+            ->withCount('questions')
+            ->whereHas('questions')
+            ->when(request()->done == true, function($challenge){
+                $challenge->whereHas('studentChallenges', function ($challenge){
+                    $challenge->where('student_id', auth()->guard('api_student')->user()->id);
+                })
+                ->with('studentChallenges', function ($challenge){
+                    $challenge->where('student_id', auth()->guard('api_student')->user()->id);
+                });
+            })
+            ->when(! request()->done == true, function($challenge){
+                $challenge->whereDoesntHave('studentChallenges', function($challenge){
+                    $challenge->where('student_id', auth()->guard('api_student')->user()->id);
+                });
+            })
+            ->latest();
+        })->latest()->get();
 
         //return with Api Resource
         return new ChallengeResource(true, 'List Data Challenge', $challenge);

@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ChallengeResource;
+use App\Models\Topik;
 use Illuminate\Support\Facades\Validator;
 
 class ChallengeController extends Controller
@@ -21,12 +22,16 @@ class ChallengeController extends Controller
     {
         //get challenge
         $challenge = Materi::when(request()->materi_id, function($challenge) {
-            $challenge = $challenge->where('id', request()->materi_id);
+            $challenge->where('id', request()->materi_id);
+        })->when(request()->kelas_id, function($materi) {
+            $materi->whereIn(
+                'topik_id', Topik::where('kelas_id', request()->kelas_id)->pluck('id')->toArray()
+            );
         })->with('challenges', function($challenge){
             $challenge->when(request()->title, function($challenge) {
                 $challenge->where('title', 'like', '%' . request()->title . '%');
             })->withCount('questions');
-        })->latest()->paginate(10);
+        })->latest()->get();
 
         // Paginator::make($challenge->toArray(), $challenge->count(), 10);
 
