@@ -37,7 +37,8 @@ class ReplyCommentController extends Controller
         ]);
 
         if($ReplyComment) {
-            $video = Video::whereId($request->comment_id)
+            $comment = Comment::whereId($request->comment_id)->first();
+            $video = Video::whereId($comment->video_id)
             ->with('comments', function($comments){
                 $comments
                 ->with('student')
