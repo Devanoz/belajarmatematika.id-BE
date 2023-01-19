@@ -32,6 +32,9 @@ Route::prefix('teacher')->group(function () {
         //logout
         Route::post('/logout', [App\Http\Controllers\Api\Teacher\LoginController::class, 'logout', ['as' => 'teacher']]);
 
+        //profile
+        Route::post('/profile', [App\Http\Controllers\Api\Teacher\ProfileController::class, 'update'], ['as' => 'teacher']);
+
         //kelas
         Route::apiResource('/kelas', App\Http\Controllers\Api\Teacher\KelasController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
         
@@ -56,9 +59,6 @@ Route::prefix('teacher')->group(function () {
     
         //question
         Route::apiResource('/questions', App\Http\Controllers\Api\Teacher\QuestionController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
-    
-        //option
-        Route::apiResource('/options', App\Http\Controllers\Api\Teacher\OptionController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
     
         //scoreboard
         Route::get('/scoreboards', [App\Http\Controllers\Api\Teacher\ScoreBoardController::class, 'index'], ['as' => 'teacher']);

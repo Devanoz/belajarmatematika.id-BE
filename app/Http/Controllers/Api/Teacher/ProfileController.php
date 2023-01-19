@@ -27,7 +27,7 @@ class ProfileController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name'  => 'required',
-            'email' => 'required|email|unique:students|unique:admins|unique:teachers,email,'. $teacher->id,
+            'email' => 'required|email|unique:students|unique:teachers,email,'. $teacher->id,
             'image' => 'image|mimes:jpeg,jpg,png|max:2000'
         ]);
 
