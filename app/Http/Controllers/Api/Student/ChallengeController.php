@@ -67,7 +67,7 @@ class ChallengeController extends Controller
                     $challenge->where('student_id', auth()->guard('api_student')->user()->id);
                 });
             })
-            ->orderBy('id', 'ASC');
+            ->oldest();
         })->latest()->get();
 
         //return with Api Resource
