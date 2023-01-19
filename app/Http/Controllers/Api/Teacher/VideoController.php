@@ -81,7 +81,18 @@ class VideoController extends Controller
      */
     public function show($id)
     {
-        $video = Video::whereId($id)->first();
+        $video = Video::whereId($id)
+        ->with('comments', function($comments){
+            $comments
+            ->with('student')
+            ->with('teacher')
+            ->with('replyComments', function($replyComments){
+                $replyComments
+                ->with('student')
+                ->with('teacher')
+                ->oldest();
+            })->oldest();
+        })->first();
         
         if($video) {
             //return success with Api Resource

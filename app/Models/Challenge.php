@@ -21,6 +21,10 @@ class Challenge extends Model
         return $this->hasMany(Question::class);
     }
 
+    public function completedQuestions(){
+        return $this->hasManyThrough(StudentAnswer::class, Question::class)->where('student_id', auth()->guard('api_student')->user()->id);
+    }
+
     public function materi(){
         return $this->belongsTo(Materi::class);
     }

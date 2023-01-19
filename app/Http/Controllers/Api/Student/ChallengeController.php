@@ -7,6 +7,7 @@ use App\Http\Resources\ChallengeResource;
 use App\Models\Challenge;
 use App\Models\Materi;
 use App\Models\Topik;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class ChallengeController extends Controller
@@ -44,7 +45,7 @@ class ChallengeController extends Controller
                 $challenge->whereDoesntHave('studentChallenges', function($challenge){
                     $challenge->where('student_id', auth()->guard('api_student')->user()->id);
                 });
-            })
+            })->withCount('completedQuestions')
             ->oldest();
         })->oldest()->get();
 
