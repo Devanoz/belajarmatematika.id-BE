@@ -18,13 +18,12 @@ class StudentSeeder extends Seeder
     public function run()
     {
         for($i = 1; $i <= 20; $i++){
-            DB::table('students')->insert([
-            'name' => 'Student' . $i,
-            'slug' => Str::slug('Student' . $i, '-'),
-            'email' => 'student' . $i . '@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
-
+                DB::table('students')->insert([
+                'name' => 'Student' . $i,
+                'slug' => Str::slug('Student' . $i, '-'),
+                'email' => 'student' . $i . '@gmail.com',
+                'password' => Hash::make('password'),
+            ]);
         }
     }
 }

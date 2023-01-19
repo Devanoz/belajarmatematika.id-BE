@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api\Student;
+namespace App\Http\Controllers\Api\Teacher;
 
-use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\StudentResource;
+use App\Http\Resources\TeacherResource;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -23,11 +23,11 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
-        $student = Student::findOrFail(auth()->guard('api_student')->user()->id);
+        $teacher = Teacher::findOrFail(auth()->guard('api_teacher')->user()->id);
 
         $validator = Validator::make($request->all(), [
             'name'  => 'required',
-            'email' => 'required|email|unique:teachers|unique:admins|unique:students,email,'. $student->id,
+            'email' => 'required|email|unique:students|unique:admins|unique:teachers,email,'. $teacher->id,
             'image' => 'image|mimes:jpeg,jpg,png|max:2000'
         ]);
 
@@ -39,14 +39,14 @@ class ProfileController extends Controller
         if ($request->file('image')) {
 
             //remove old image
-            Storage::disk('local')->delete('public/students/'.basename($student->image));
+            Storage::disk('local')->delete('public/teachers/'.basename($teacher->image));
         
             //upload new image
             $image = $request->file('image');
-            $image->storeAs('public/students', $image->hashName());
+            $image->storeAs('public/teachers', $image->hashName());
 
-            //update student with new image
-            $student->update([
+            //update teacher with new image
+            $teacher->update([
                 'image'     => $image->hashName(),
             ]);
         }
@@ -63,24 +63,24 @@ class ProfileController extends Controller
                 return response()->json($validator->errors(), 400);
             }
 
-            //update student with new password
-            $student->update([
+            //update teacher with new password
+            $teacher->update([
                 'password'  => Hash::make($request->password),
             ]);
         }
 
-        $student->update([
+        $teacher->update([
                 'name'      => $request->name,
                 'slug'      => Str::slug($request->name, '-'),
                 'email'     => $request->email,
             ]);
 
-        if($student) {
+        if($teacher) {
             //return with Api Resource
-            return new StudentResource(true, 'Update Profile Student Berhasil', $student);
+            return new TeacherResource(true, 'Update Profile Teacher Berhasil', $teacher);
         }
 
         //return failed with Api Resource
-        return new StudentResource(false, 'Update Profile Student Gagal!', null);
+        return new TeacherResource(false, 'Update Profile Teacher Gagal!', null);
     }
 }
