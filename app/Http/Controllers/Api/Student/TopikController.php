@@ -18,15 +18,6 @@ class TopikController extends Controller
     public function index()
     {
         //get topiks
-        // $topiks = Kelas::when(request()->kelas_id, function ($kelas) {
-        //    $kelas->where('kelas_id', request()->kelas_id);
-        // })
-        // ->with('topiks', function($topiks){
-        //     $topiks->when(request()->title, function($topiks) {
-        //         $topiks->where('title', 'like', '%'. request()->title . '%');
-        //     })->latest();
-        // })
-        // ->get();
         $topiks = Topik::when(request()->title, function ($topiks) {
             $topiks = $topiks->where('title', 'like', '%' . request()->title . '%');
         })->when(request()->kelas_id, function ($topiks) {

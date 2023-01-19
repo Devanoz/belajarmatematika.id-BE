@@ -28,7 +28,7 @@ class MateriController extends Controller
             $materi->whereIn(
                 'topik_id', Topik::where('kelas_id', request()->kelas_id)->pluck('id')->toArray()
             );
-        })->latest()->get();
+        })->oldest()->get();
         
         
         //return with Api Resource

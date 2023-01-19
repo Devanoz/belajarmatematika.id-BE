@@ -47,10 +47,10 @@ class TopikController extends Controller
         })
         ->with('materis', function($materis){
             $materis->when(request()->title, function ($materis) {
-                $materis->where('title', 'like', '%' . request()->title . '%')->latest();
-            })->latest();
+                $materis->where('title', 'like', '%' . request()->title . '%')->oldest();
+            })->oldest();
         })
-        ->latest()->get();
+        ->oldest()->get();
 
         //return with Api Resource
         return new TopikResource(true, 'List Data topiks with Materi', $topiks);

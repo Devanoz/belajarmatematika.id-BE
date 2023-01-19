@@ -43,18 +43,6 @@ class QuestionController extends Controller
             $challenge['questions'] = $questions;
         }
 
-        // $data = $questions->items()[0]->answer_key = null;
-        // $data = array_map(function ($data) {
-        //     unset($data['answer_key']);
-        //     return $data;
-        // }, $data->toArray());
-        // $questions->items()[0] = $data;
-
-        // $questions = array_map(function ($questions) {
-        //     unset($questions['answer_key']);
-        //     return $questions;
-        // }, $questions->toArray());
-
         //return with Api Resource
         return new QuestionResource(true, 'List Data Question', $challenge);
     }

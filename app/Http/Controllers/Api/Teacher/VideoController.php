@@ -32,7 +32,7 @@ class VideoController extends Controller
             $videos->when(request()->title, function($video) {
                 $video->where('title', 'like', '%'. request()->title . '%');
             });
-        })->latest()->get();
+        })->oldest()->get();
         
         //return with Api Resource
         return new VideoResource(true, 'List Data Video', $video);

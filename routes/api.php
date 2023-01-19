@@ -53,7 +53,6 @@ Route::prefix('teacher')->group(function () {
         
         //challenge
         Route::apiResource('/challenges', App\Http\Controllers\Api\Teacher\ChallengeController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
-        Route::get('/challengesWithMateri', [App\Http\Controllers\Api\Teacher\ChallengeController::class, 'indexWithMateri', ['as' => 'teacher']]);
     
         //question
         Route::apiResource('/questions', App\Http\Controllers\Api\Teacher\QuestionController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
@@ -113,7 +112,6 @@ Route::prefix('student')->group(function () {
         
         //challenge
         Route::apiResource('/challenges', App\Http\Controllers\Api\Student\ChallengeController::class, ['except' => ['store', 'update', 'destroy','create', 'edit'], 'as' => 'student']);
-        Route::get('/challengesWithMateri', [App\Http\Controllers\Api\Student\ChallengeController::class, 'indexWithMateri', ['as' => 'student']]);
     
         //question
         Route::get('/questions', [App\Http\Controllers\Api\Student\QuestionController::class, 'index'], ['as' => 'student']);

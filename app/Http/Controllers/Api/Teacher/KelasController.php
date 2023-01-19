@@ -21,7 +21,7 @@ class KelasController extends Controller
         //get kelas
         $kelas = Kelas::when(request()->title, function($kelas) {
             $kelas = $kelas->where('title', 'like', '%'. request()->title . '%');
-        })->latest()->paginate(10);
+        })->oldest()->get();
         
         //return with Api Resource
         return new KelasResource(true, 'List Data Kelas', $kelas);

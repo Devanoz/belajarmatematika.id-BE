@@ -32,40 +32,10 @@ class ChallengeController extends Controller
             $challenge->when(request()->title, function($challenge) {
                 $challenge->where('title', 'like', '%' . request()->title . '%');
             })->withCount('questions');
-        })->latest()->get();
-
-        // Paginator::make($challenge->toArray(), $challenge->count(), 10);
-
-        // ->filter(function($challenge){
-        //     return $challenge->challenges->count() > 0;
-        // })
-
-        // ->has('challenges', function($challenge){
-        //     $challenge->count() > 0;
-        // })
-
-        // $challenge = Challenge::when(request()->title, function($challenge) {
-        //     $challenge = $challenge->where('title', 'like', '%'. request()->title . '%');
-        // })->when(request()->materi_id, function($challenge) {
-        //     $challenge = $challenge->where('materi_id', request()->materi_id);
-        // })->latest()->paginate(10);
+        })->oldest()->get();
         
         //return with Api Resource
         return new ChallengeResource(true, 'List Data Challenge', $challenge);
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function indexWithMateri()
-    {
-        //get challenge
-        $challenge = Challenge::with('materi')->latest()->get();
-
-        //return with Api Resource
-        return new ChallengeResource(true, 'List Data Challenge With Materi', $challenge);
     }
 
     /**

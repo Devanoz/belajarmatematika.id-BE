@@ -27,12 +27,6 @@ class ScoreBoardController extends Controller
             ->get()
             ->take(10);
 
-        // $scoreBoard = [
-        //     'score' => $scoreBoard->data->score,
-        //     'name'  => $scoreBoard->data->student->name,
-        //     'image' => $scoreBoard->data->student->image_url,
-        // ];
-
         //return with Api Resource
         return new ScoreBoardResource(true, 'List Data ScoreBoard', $scoreBoard);
     }
