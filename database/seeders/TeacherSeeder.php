@@ -18,10 +18,20 @@ class TeacherSeeder extends Seeder
     public function run()
     {
         DB::table('teachers')->insert([
-            'name' => 'Teacher',
-            'slug' => Str::slug('Teacher', '-'),
-            'email' => 'teacher@gmail.com',
+            'name' => 'Admin',
+            'slug' => Str::slug('Admin', '-'),
+            'email' => 'admin@gmail.com',
             'password' => Hash::make('password'),
+            'role' => 'admin',
         ]);
+
+        for($i = 1; $i <= 3; $i++){
+            DB::table('teachers')->insert([
+                'name' => 'Teacher ' . $i,
+                'slug' => Str::slug('Teacher ' . $i, '-'),
+                'email' => 'teacher' . $i . '@gmail.com',
+                'password' => Hash::make('password'),
+            ]);
+        }
     }
 }
