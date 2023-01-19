@@ -61,7 +61,8 @@ Route::prefix('teacher')->group(function () {
         //option
         Route::apiResource('/options', App\Http\Controllers\Api\Teacher\OptionController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
     
-    
+        //scoreboard
+        Route::get('/scoreboards', [App\Http\Controllers\Api\Teacher\ScoreBoardController::class, 'index'], ['as' => 'teacher']);
     
     });
 
