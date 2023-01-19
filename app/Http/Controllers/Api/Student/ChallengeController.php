@@ -47,7 +47,8 @@ class ChallengeController extends Controller
             $materi->whereIn(
                 'topik_id', Topik::where('kelas_id', request()->kelas_id)->pluck('id')->toArray()
             );
-        })->with('challenges', function($challenge){
+        })->whereHas('challenges')
+        ->with('challenges', function($challenge){
             $challenge->when(request()->title, function($challenge) {
                 $challenge->where('title', 'like', '%' . request()->title . '%');
             })

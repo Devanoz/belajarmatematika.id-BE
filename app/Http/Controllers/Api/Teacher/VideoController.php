@@ -27,7 +27,8 @@ class VideoController extends Controller
             $materi->whereIn(
                 'topik_id', Topik::where('kelas_id', request()->kelas_id)->pluck('id')->toArray()
             );
-        })->with('videos', function($videos){
+        })->whereHas('videos')
+        ->with('videos', function($videos){
             $videos->when(request()->title, function($video) {
                 $video->where('title', 'like', '%'. request()->title . '%');
             });

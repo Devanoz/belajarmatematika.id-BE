@@ -16,7 +16,7 @@ class VideoSeeder extends Seeder
      */
     public function run()
     {
-                $title = [
+        $title = [
             'Keliling Segitiga',
             'Keliling Persegi',
             'Keliling Persegi Panjang',
