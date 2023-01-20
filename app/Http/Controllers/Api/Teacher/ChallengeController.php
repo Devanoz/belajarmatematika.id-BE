@@ -102,6 +102,7 @@ class ChallengeController extends Controller
         $validator = Validator::make($request->all(), [
             'title'     => 'required|unique:challenges,title,'.$challenge->id,
             'materi_id' => 'required|exists:questions,id',
+            'is_published' => 'required|boolean|in:true,1',
         ]);
 
         if ($validator->fails()) {
@@ -113,6 +114,7 @@ class ChallengeController extends Controller
             'title' => $request->title,
             'slug' => Str::slug($request->title, '-'),
             'materi_id' => $request->materi_id,
+            'is_published' => $request->is_published,
         ]);
 
         if($challenge) {

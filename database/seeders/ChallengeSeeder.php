@@ -33,6 +33,7 @@ class ChallengeSeeder extends Seeder
                 DB::table('challenges')->insert([
                     'title' => $title[$i - 1] . ' ' . $j,
                     'slug' => Str::slug($title[$i - 1] . ' ' . $j, '-'),
+                    'is_published' => true,
                     'materi_id' => $i,
                 ]);
             }

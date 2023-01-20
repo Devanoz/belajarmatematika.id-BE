@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug');
             $table->unsignedBigInteger('materi_id');
+            $table->boolean('is_published')->default(false);
             $table->timestamps();
 
             //relationship to materis

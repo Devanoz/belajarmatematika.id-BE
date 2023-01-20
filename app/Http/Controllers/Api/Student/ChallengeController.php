@@ -23,6 +23,7 @@ class ChallengeController extends Controller
             $challenge['currentChallenges'] = null;
         }else{
             $challenge['currentChallenges'] = Challenge::whereHas('questions')
+            ->where('is_published', true)
             ->whereHas('completedQuestions')
             ->whereDoesntHave('studentChallenges', function($challenge){
                 $challenge->where('student_id', auth()->guard('api_student')->user()->id);
@@ -47,6 +48,7 @@ class ChallengeController extends Controller
             $challenge->when(request()->title, function($challenge) {
                 $challenge->where('title', 'like', '%' . request()->title . '%');
             })
+            ->where('is_published', true)
             ->whereHas('questions')
             ->when(request()->done == true, function($challenge){
                 $challenge->whereHas('studentChallenges', function ($challenge){
