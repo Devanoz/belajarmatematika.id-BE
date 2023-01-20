@@ -18,6 +18,7 @@ class ChallengeController extends Controller
      */
     public function index()
     {
+        //get current challenge
         if(request()->title || request()->materi_id || request()->kelas_id || request()->done){
             $challenge['currentChallenges'] = null;
         }else{

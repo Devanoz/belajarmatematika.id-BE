@@ -21,6 +21,7 @@ class VideoController extends Controller
      */
     public function index()
     {
+        //get current video
         if(request()->materi_id || request()->kelas_id || request()->title){
             $video['currentVideos'] = null;
         }else{
@@ -34,21 +35,22 @@ class VideoController extends Controller
         //get video
         $video['videos'] = Materi::when(request()->materi_id, function($materi) {
             $materi->where('id', request()->materi_id);
-        })->when(request()->kelas_id, function($materi) {
+        })
+        ->when(request()->kelas_id, function($materi) {
             $materi->whereIn(
                 'topik_id', Topik::where('kelas_id', request()->kelas_id)->pluck('id')->toArray()
             );
-        })->whereHas('videos')
+        })
+        ->whereHas('videos')
         ->with('videos', function($videos){
             $videos->when(request()->title, function($video) {
                 $video->where('title', 'like', '%'. request()->title . '%');
             })
             ->withCount('studentVideos');
-        })->oldest()->get();
-
-        
-        
-        
+        })
+        ->oldest()
+        ->get();
+   
         //return with Api Resource
         return new VideoResource(true, 'List Data Video', $video);
     }
