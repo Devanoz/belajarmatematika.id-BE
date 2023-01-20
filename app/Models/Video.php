@@ -22,6 +22,10 @@ class Video extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function studentVideos(){
+        return $this->hasMany(StudentVideo::class)->where('student_id', auth()->guard('api_student')->user()->id);
+    }
+
     public function getUrlAttribute($url)
     {
         if($url){

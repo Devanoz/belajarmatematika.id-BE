@@ -7,6 +7,7 @@ use App\Http\Resources\VideoResource;
 use App\Models\Video;
 use App\Models\Materi;
 use App\Models\Student;
+use App\Models\StudentVideo;
 use App\Models\Topik;
 use Illuminate\Http\Request;
 
@@ -19,8 +20,14 @@ class VideoController extends Controller
      */
     public function index()
     {
+        $video['currentVideos'] = StudentVideo::where('student_id', auth()->guard('api_student')->user()->id)
+        ->with('video')
+        ->latest()
+        ->first()
+        ->video;
+
         //get video
-        $video = Materi::when(request()->materi_id, function($materi) {
+        $video['videos'] = Materi::when(request()->materi_id, function($materi) {
             $materi->where('id', request()->materi_id);
         })->when(request()->kelas_id, function($materi) {
             $materi->whereIn(
@@ -30,8 +37,12 @@ class VideoController extends Controller
         ->with('videos', function($videos){
             $videos->when(request()->title, function($video) {
                 $video->where('title', 'like', '%'. request()->title . '%');
-            });
+            })
+            ->withCount('studentVideos');
         })->oldest()->get();
+
+        
+        
         
         //return with Api Resource
         return new VideoResource(true, 'List Data Video', $video);
@@ -58,6 +69,13 @@ class VideoController extends Controller
                 ->oldest();
             })->oldest();
         })->first();
+
+        if(! StudentVideo::where('video_id', $id)->where('student_id', auth()->guard('api_student')->user()->id)->first()){
+            StudentVideo::create([
+                'video_id' => $id,
+                'student_id' => auth()->guard('api_student')->user()->id,
+            ]);
+        }
         
         if($video) {
             //return success with Api Resource
