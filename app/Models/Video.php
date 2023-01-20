@@ -16,6 +16,7 @@ class Video extends Model
         'slug',
         'url',
         'materi_id',
+        'updated_at',
     ];   
 
     public function comments(){

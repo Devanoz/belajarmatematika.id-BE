@@ -11,7 +11,7 @@ class Comment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['video_id', 'teacher_id', 'student_id', 'title'];
+    protected $fillable = ['video_id', 'teacher_id', 'student_id', 'title', 'updated_at'];
 
     public function teacher(){
         return $this->belongsTo(Teacher::class);

@@ -16,7 +16,8 @@ class Option extends Model
         'B', 
         'C', 
         'D',
-        'question_id'
+        'question_id',
+        'updated_at',
     ];
 
     public function getCreatedAtAttribute($created_at)

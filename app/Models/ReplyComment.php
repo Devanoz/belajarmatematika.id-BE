@@ -11,7 +11,7 @@ class ReplyComment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['comment_id', 'teacher_id', 'student_id', 'title'];
+    protected $fillable = ['comment_id', 'teacher_id', 'student_id', 'title', 'updated_at'];
 
     public function teacher(){
         return $this->belongsTo(Teacher::class);

@@ -14,7 +14,8 @@ class StudentAnswer extends Model
     protected $fillable = [
         'question_id',
         'student_id',
-        'answer'
+        'answer',
+        'updated_at',
     ];
 
     public function question(){

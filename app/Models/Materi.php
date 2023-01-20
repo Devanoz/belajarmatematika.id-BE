@@ -15,7 +15,8 @@ class Materi extends Model
         'title',
         'slug',
         'content',
-        'topik_id'
+        'topik_id',
+        'updated_at',
     ];
 
     public function videos(){

@@ -11,7 +11,7 @@ class Question extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'slug', 'image', 'answer_key', 'is_pilihan_ganda', 'challenge_id'];
+    protected $fillable = ['title', 'slug', 'image', 'answer_key', 'is_pilihan_ganda', 'challenge_id', 'updated_at'];
 
     public function options(){
         return $this->hasMany(Option::class);

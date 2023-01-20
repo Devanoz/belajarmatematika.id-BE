@@ -13,7 +13,8 @@ class Kelas extends Model
 
     protected $fillable = [
         'title', 
-        'slug'
+        'slug', 
+        'updated_at',
     ];
 
     public function topiks(){

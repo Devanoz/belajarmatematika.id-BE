@@ -9,7 +9,7 @@ class StudentVideo extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['video_id', 'student_id'];
+    protected $fillable = ['video_id', 'student_id', 'updated_at'];
 
     public function video(){
         return $this->belongsTo(Video::class);

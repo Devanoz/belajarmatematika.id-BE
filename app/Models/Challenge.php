@@ -11,7 +11,7 @@ class Challenge extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title','slug', 'materi_id'];
+    protected $fillable = ['title','slug', 'materi_id', 'updated_at'];
 
     public function studentChallenges(){
         return $this->hasMany(StudentChallenge::class);

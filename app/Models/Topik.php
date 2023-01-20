@@ -15,6 +15,7 @@ class Topik extends Model
         'title',
         'slug',
         'kelas_id',
+        'updated_at',
     ];
 
     public function materis(){

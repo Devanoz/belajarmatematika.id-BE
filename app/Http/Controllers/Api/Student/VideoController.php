@@ -10,6 +10,7 @@ use App\Models\Student;
 use App\Models\StudentVideo;
 use App\Models\Topik;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class VideoController extends Controller
 {
@@ -21,8 +22,8 @@ class VideoController extends Controller
     public function index()
     {
         $video['currentVideos'] = StudentVideo::where('student_id', auth()->guard('api_student')->user()->id)
+        ->orderBy('updated_at', 'DESC')
         ->with('video')
-        ->latest()
         ->first()
         ->video;
 
@@ -70,10 +71,16 @@ class VideoController extends Controller
             })->oldest();
         })->first();
 
-        if(! StudentVideo::where('video_id', $id)->where('student_id', auth()->guard('api_student')->user()->id)->first()){
+        $studentVideo = StudentVideo::where('video_id', $id)->where('student_id', auth()->guard('api_student')->user()->id)->first();
+
+        if(! $studentVideo){
             StudentVideo::create([
                 'video_id' => $id,
                 'student_id' => auth()->guard('api_student')->user()->id,
+            ]);
+        }else{
+            $studentVideo->update([
+                'updated_at' => Carbon::now()
             ]);
         }
         

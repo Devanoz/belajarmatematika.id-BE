@@ -18,7 +18,7 @@ class Teacher extends Authenticatable implements JWTSubject
      *
      * @var string[]
      */
-    protected $fillable = ['name', 'slug', 'email', 'password', 'image', 'role'];
+    protected $fillable = ['name', 'slug', 'email', 'password', 'image', 'role', 'updated_at'];
 
     /**
      * The attributes that should be hidden for serialization.
