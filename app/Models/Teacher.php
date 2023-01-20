@@ -62,17 +62,17 @@ class Teacher extends Authenticatable implements JWTSubject
 
     public function getCreatedAtAttribute($created_at)
     {
-        // return Carbon::parse($created_at)->format('Y-m-d H:i:s');
-        return Carbon::createFromTimestamp(strtotime($created_at))
+        $dateTime = Carbon::createFromTimestamp(strtotime($created_at))
         ->timezone(Config::get('app.timezone'))
         ->toDateTimeString();
+        return Carbon::parse($dateTime)->translatedFormat('j F Y');
     }   
 
     public function getUpdatedAtAttribute($updated_at)
     {
-        // return Carbon::parse($updated_at)->format('Y-m-d H:i:s');
-        return Carbon::createFromTimestamp(strtotime($updated_at))
+        $dateTime = Carbon::createFromTimestamp(strtotime($updated_at))
         ->timezone(Config::get('app.timezone'))
         ->toDateTimeString();
+        return Carbon::parse($dateTime)->translatedFormat('j F Y');
     }
 }
