@@ -21,11 +21,15 @@ class VideoController extends Controller
      */
     public function index()
     {
-        $video['currentVideos'] = StudentVideo::where('student_id', auth()->guard('api_student')->user()->id)
-        ->orderBy('updated_at', 'DESC')
-        ->with('video')
-        ->first()
-        ->video;
+        if(request()->materi_id || request()->kelas_id || request()->title){
+            $video['currentVideos'] = null;
+        }else{
+            $video['currentVideos'] = StudentVideo::where('student_id', auth()->guard('api_student')->user()->id)
+            ->orderBy('updated_at', 'DESC')
+            ->with('video')
+            ->first()
+            ->video;
+        }
 
         //get video
         $video['videos'] = Materi::when(request()->materi_id, function($materi) {
