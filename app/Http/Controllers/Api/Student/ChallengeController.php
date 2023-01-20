@@ -7,7 +7,6 @@ use App\Http\Resources\ChallengeResource;
 use App\Models\Challenge;
 use App\Models\Materi;
 use App\Models\Topik;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class ChallengeController extends Controller
