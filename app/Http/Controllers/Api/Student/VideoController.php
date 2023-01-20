@@ -29,7 +29,7 @@ class VideoController extends Controller
             ->orderBy('updated_at', 'DESC')
             ->with('video')
             ->first()
-            ->video;
+            ->video ?? null;
         }
 
         //get video

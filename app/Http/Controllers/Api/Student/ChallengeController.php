@@ -31,7 +31,7 @@ class ChallengeController extends Controller
             ->withCount('questions')
             ->withCount('completedQuestions')
             ->orderBy('completed_questions_count', 'DESC')
-            ->first();
+            ->first() ?? null;
         }
 
         //get challenge
