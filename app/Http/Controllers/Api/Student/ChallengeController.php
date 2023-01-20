@@ -22,8 +22,7 @@ class ChallengeController extends Controller
         if(request()->title || request()->materi_id || request()->kelas_id || request()->done){
             $challenge['currentChallenges'] = null;
         }else{
-            $challenge['currentChallenges'] = Challenge::
-            whereHas('questions')
+            $challenge['currentChallenges'] = Challenge::whereHas('questions')
             ->whereHas('completedQuestions')
             ->whereDoesntHave('studentChallenges', function($challenge){
                 $challenge->where('student_id', auth()->guard('api_student')->user()->id);
@@ -37,16 +36,17 @@ class ChallengeController extends Controller
         //get challenge
         $challenge['challenges'] = Materi::when(request()->materi_id, function($challenge) {
             $challenge->where('id', request()->materi_id);
-        })->when(request()->kelas_id, function($materi) {
+        })
+        ->when(request()->kelas_id, function($materi) {
             $materi->whereIn(
                 'topik_id', Topik::where('kelas_id', request()->kelas_id)->pluck('id')->toArray()
             );
-        })->whereHas('challenges')
+        })
+        ->whereHas('challenges')
         ->with('challenges', function($challenge){
             $challenge->when(request()->title, function($challenge) {
                 $challenge->where('title', 'like', '%' . request()->title . '%');
             })
-            ->withCount('questions')
             ->whereHas('questions')
             ->when(request()->done == true, function($challenge){
                 $challenge->whereHas('studentChallenges', function ($challenge){
@@ -60,9 +60,13 @@ class ChallengeController extends Controller
                 $challenge->whereDoesntHave('studentChallenges', function($challenge){
                     $challenge->where('student_id', auth()->guard('api_student')->user()->id);
                 });
-            })->withCount('completedQuestions')
+            })
+            ->withCount('questions')
+            ->withCount('completedQuestions')
             ->oldest();
-        })->oldest()->get();
+        })
+        ->oldest()
+        ->get();
 
         //return with Api Resource
         return new ChallengeResource(true, 'List Data Challenge', $challenge);
