@@ -19,8 +19,23 @@ class ChallengeController extends Controller
      */
     public function index()
     {
+        if(request()->title || request()->materi_id || request()->kelas_id || request()->done){
+            $challenge['currentChallenges'] = null;
+        }else{
+            $challenge['currentChallenges'] = Challenge::
+            whereHas('questions')
+            ->whereHas('completedQuestions')
+            ->whereDoesntHave('studentChallenges', function($challenge){
+                $challenge->where('student_id', auth()->guard('api_student')->user()->id);
+            })
+            ->withCount('questions')
+            ->withCount('completedQuestions')
+            ->orderBy('completed_questions_count', 'DESC')
+            ->first();
+        }
+
         //get challenge
-        $challenge = Materi::when(request()->materi_id, function($challenge) {
+        $challenge['challenges'] = Materi::when(request()->materi_id, function($challenge) {
             $challenge->where('id', request()->materi_id);
         })->when(request()->kelas_id, function($materi) {
             $materi->whereIn(
