@@ -24,7 +24,7 @@ class QuestionController extends Controller
         //get question
         $question = Question::with('options')->when(request()->challenge_id, function($question) {
             $question = $question->where('challenge_id', request()->challenge_id);
-        })->oldest()->paginate(10);
+        })->oldest()->get();
         
         //return with Api Resource
         return new QuestionResource(true, 'List Data Question', $question);
