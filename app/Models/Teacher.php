@@ -41,6 +41,21 @@ class Teacher extends Authenticatable implements JWTSubject
     }
 
     /**
+     * getImageAttribute
+     *
+     * @param  mixed $image
+     * @return void
+     */
+    public function getImageAttribute($image)
+    {
+        if($image){
+            return asset('storage/students/' . $image);
+        }else{
+            return null;
+        }
+    }
+
+    /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
      * @return mixed
