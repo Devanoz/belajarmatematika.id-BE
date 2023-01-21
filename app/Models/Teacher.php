@@ -49,7 +49,7 @@ class Teacher extends Authenticatable implements JWTSubject
     public function getImageAttribute($image)
     {
         if($image){
-            return asset('storage/students/' . $image);
+            return asset('storage/teachers/' . $image);
         }else{
             return null;
         }
