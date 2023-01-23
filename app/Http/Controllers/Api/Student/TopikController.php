@@ -33,6 +33,20 @@ class TopikController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function listTopiks()
+    {
+        //get topiks
+        $topiks = Topik::select(['id', 'title'])->get();
+        
+        //return with Api Resource
+        return new TopikResource(true, 'List Data topiks', $topiks);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function indexWithMateris()
     {
         //get topiks

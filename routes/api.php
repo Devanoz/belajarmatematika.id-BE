@@ -41,10 +41,12 @@ Route::prefix('teacher')->group(function () {
         //topik
         Route::apiResource('/topiks', App\Http\Controllers\Api\Teacher\TopikController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
         Route::get('/topiksWithMateris', [App\Http\Controllers\Api\Teacher\TopikController::class, 'indexWithMateris', ['as' => 'teacher']]);
-
+        Route::get('/listTopiks', [App\Http\Controllers\Api\Teacher\TopikController::class, 'listTopiks', ['as' => 'teacher']]);
+        
         //materi
         Route::apiResource('/materis', App\Http\Controllers\Api\Teacher\MateriController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
-    
+        Route::get('/listMateris', [App\Http\Controllers\Api\Teacher\MateriController::class, 'listMateris', ['as' => 'teacher']]);
+        
         //video
         Route::apiResource('/videos', App\Http\Controllers\Api\Teacher\VideoController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
     
@@ -56,13 +58,13 @@ Route::prefix('teacher')->group(function () {
         
         //challenge
         Route::apiResource('/challenges', App\Http\Controllers\Api\Teacher\ChallengeController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
-    
+        
         //question
         Route::apiResource('/questions', App\Http\Controllers\Api\Teacher\QuestionController::class, ['except' => ['create', 'edit'], 'as' => 'teacher']);
-    
+        
         //scoreboard
         Route::get('/scoreboards', [App\Http\Controllers\Api\Teacher\ScoreBoardController::class, 'index'], ['as' => 'teacher']);
-
+        
         //teacher
         Route::apiResource('/teachers', App\Http\Controllers\Api\Teacher\TeacherController::class, ['except' => ['show', 'update', 'create', 'edit'], 'as' => 'teacher']);
     
@@ -78,19 +80,19 @@ Route::prefix('student')->group(function () {
 
     //route login
     Route::post('/login', [App\Http\Controllers\Api\Student\LoginController::class, 'index'], ['as' => 'student']);
-
+    
     //group route with middleware "auth:api_student"
     Route::group(['middleware' => 'auth:api_student'], function() {
-
+        
         //data user
         Route::get('/user', [App\Http\Controllers\Api\Student\LoginController::class, 'getUser'], ['as' => 'student']);
-
+        
         //refresh token JWT
         Route::get('/refresh', [App\Http\Controllers\Api\Student\LoginController::class, 'refreshToken'], ['as' => 'student']);
-
+        
         //logout
         Route::post('/logout', [App\Http\Controllers\Api\Student\LoginController::class, 'logout'], ['as' => 'student']);
-
+        
         //profile
         Route::post('/profile', [App\Http\Controllers\Api\Student\ProfileController::class, 'update'], ['as' => 'student']);
         
@@ -100,9 +102,11 @@ Route::prefix('student')->group(function () {
         //topik
         Route::get('/topiks', [App\Http\Controllers\Api\Student\TopikController::class, 'index'], ['as' => 'student']);
         Route::get('/topiksWithMateris', [App\Http\Controllers\Api\Student\TopikController::class, 'indexWithMateris', ['as' => 'student']]);
-
+        Route::get('/listTopiks', [App\Http\Controllers\Api\Student\TopikController::class, 'listTopiks', ['as' => 'student']]);
+        
         //materi 
         Route::apiResource('/materis', App\Http\Controllers\Api\Student\MateriController::class, ['except' => ['store', 'update', 'destroy', 'create', 'edit'],'as' => 'student']);
+        Route::get('/listMateris', [App\Http\Controllers\Api\Student\MateriController::class, 'listMateris', ['as' => 'student']]);
         
         //video
         Route::apiResource('/videos', App\Http\Controllers\Api\Student\VideoController::class, ['except' => ['store', 'update', 'destroy', 'create', 'edit'], 'as' => 'student']);

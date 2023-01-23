@@ -36,6 +36,20 @@ class MateriController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function listMateris()
+    {
+        //get materis
+        $materis = Materi::select(['id', 'title'])->get();
+        
+        //return with Api Resource
+        return new MateriResource(true, 'List Data Materis', $materis);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
