@@ -206,7 +206,7 @@ class QuestionController extends Controller
             }
 
             //create Option
-            $option = Option::create([
+            $option = Option::where('question_id', $question->id)->update([
                 'A'       => $request->A,
                 'B'       => $request->B,
                 'C'       => $request->C,
