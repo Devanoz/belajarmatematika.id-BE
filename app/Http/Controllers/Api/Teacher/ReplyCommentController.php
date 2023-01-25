@@ -119,7 +119,7 @@ class ReplyCommentController extends Controller
      */
     public function destroy(ReplyComment $replyComment)
     {
-        if(auth()->guard('api_student')->user()->id != $replyComment->student_id){
+        if(auth()->guard('api_teacher')->user()->id != $replyComment->teacher_id){
             return response()->json([
                 'success' => false,
                 'message' => 'Forbidden access to update replyComment!'
