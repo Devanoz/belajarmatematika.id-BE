@@ -7,6 +7,7 @@ use App\Http\Resources\ScoreBoardResource;
 use App\Models\StudentChallenge;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ScoreBoardController extends Controller
 {
@@ -19,12 +20,13 @@ class ScoreBoardController extends Controller
     {
         //get scoreBoard
         $scoreBoard = 
-            StudentChallenge::
-            with('student')
-            ->selectRaw('sum(score) as score, student_id')
-            ->groupBy('student_id')
-            ->orderByRaw('sum(score) desc')
-            ->paginate(10);
+        DB::select("SELECT * FROM (
+        	SELECT ROW_NUMBER() OVER(ORDER BY sum(sc.score) desc, sum(sc.created_at) asc) AS ranking, sum(sc. score) as score, sc.student_id, s.name, s.image
+            FROM students s LEFT JOIN student_challenges sc ON(s.id = sc.student_id)
+            GROUP By s.id
+        ) AS a
+        WHERE a.name LIKE '%" . request()->name . "%'
+        LIMIT 10");
 
         //return with Api Resource
         return new ScoreBoardResource(true, 'List Data ScoreBoard', $scoreBoard);
