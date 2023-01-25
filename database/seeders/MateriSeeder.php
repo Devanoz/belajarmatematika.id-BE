@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class MateriSeeder extends Seeder
 {
@@ -17,97 +18,31 @@ class MateriSeeder extends Seeder
      */
     public function run()
     {
+        $title = [
+            'Keliling Segitiga',
+            'Keliling Persegi',
+            'Keliling Persegi Panjang',
+            'Luas Segitiga',
+            'Luas Persegi',
+            'Luas Persegi Panjang',
+            'Volume Kubus',
+            'Volume Balok',
+            'Volume Bola',
+        ];
+
         $url = "https://www.ima-jateng-diy.com/web/wp-content/uploads/2020/10/MATERI-MATEMATIKA-KELAS-4-BAB-6.pdf";
         $contents = file_get_contents($url);
 
-        $materi = Hash::make(substr($url, strrpos($url, '/') + 1));
-        $materi = hash('sha256', $materi) . '.pdf';
-        Storage::put('\public\questions\\' . $materi, $contents);
-        DB::table('materis')->insert([
-            'title' => 'Keliling Segitiga',
-            'slug' => 'keliling-segitiga',
-            'content' => $materi,
-            'topik_id' => 1,
-        ]);
-
-        $materi = Hash::make(substr($url, strrpos($url, '/') + 1));
-        $materi = hash('sha256', $materi) . '.pdf';
-        Storage::put('\public\questions\\' . $materi, $contents);
-        DB::table('materis')->insert([
-            'title' => 'Keliling Persegi',
-            'slug' => 'keliling-persegi',
-            'content' => $materi,
-            'topik_id' => 1,
-        ]);
-
-        $materi = Hash::make(substr($url, strrpos($url, '/') + 1));
-        $materi = hash('sha256', $materi) . '.pdf';
-        Storage::put('\public\questions\\' . $materi, $contents);
-        DB::table('materis')->insert([
-            'title' => 'Keliling Persegi Panjang',
-            'slug' => 'keliling-persegi-panjang',
-            'content' => $materi,
-            'topik_id' => 1,
-        ]);
-
-        $materi = Hash::make(substr($url, strrpos($url, '/') + 1));
-        $materi = hash('sha256', $materi) . '.pdf';
-        Storage::put('\public\questions\\' . $materi, $contents);
-        DB::table('materis')->insert([
-            'title' => 'Luas Segitiga',
-            'slug' => 'luas-segitiga',
-            'content' => $materi,
-            'topik_id' => 2,
-        ]);
-
-        $materi = Hash::make(substr($url, strrpos($url, '/') + 1));
-        $materi = hash('sha256', $materi) . '.pdf';
-        Storage::put('\public\questions\\' . $materi, $contents);
-        DB::table('materis')->insert([
-            'title' => 'Luas Persegi',
-            'slug' => 'luas-persegi',
-            'content' => $materi,
-            'topik_id' => 2,
-        ]);
-
-        $materi = Hash::make(substr($url, strrpos($url, '/') + 1));
-        $materi = hash('sha256', $materi) . '.pdf';
-        Storage::put('\public\questions\\' . $materi, $contents);
-        DB::table('materis')->insert([
-            'title' => 'Luas Persegi Panjang',
-            'slug' => 'luas-persegi-panjang',
-            'content' => $materi,
-            'topik_id' => 2,
-        ]);
-
-        $materi = Hash::make(substr($url, strrpos($url, '/') + 1));
-        $materi = hash('sha256', $materi) . '.pdf';
-        Storage::put('\public\questions\\' . $materi, $contents);
-        DB::table('materis')->insert([
-            'title' => 'Volume Kubus',
-            'slug' => 'volume-kubus',
-            'content' => $materi,
-            'topik_id' => 3,
-        ]);
-
-        $materi = Hash::make(substr($url, strrpos($url, '/') + 1));
-        $materi = hash('sha256', $materi) . '.pdf';
-        Storage::put('\public\questions\\' . $materi, $contents);
-        DB::table('materis')->insert([
-            'title' => 'Volume Balok',
-            'slug' => 'volume-balok',
-            'content' => $materi,
-            'topik_id' => 3,
-        ]);
-
-        $materi = Hash::make(substr($url, strrpos($url, '/') + 1));
-        $materi = hash('sha256', $materi) . '.pdf';
-        Storage::put('\public\questions\\' . $materi, $contents);
-        DB::table('materis')->insert([
-            'title' => 'Volume Bola',
-            'slug' => 'volume-bola',
-            'content' => $materi,
-            'topik_id' => 3,
-        ]);
+        for($i = 0; $i < count($title); $i++){
+            $materi = Hash::make(substr($url, strrpos($url, '/') + $i + 1));
+            $materi = hash('sha256', $materi) . '.pdf';
+            Storage::put('\public\materis\\' . $materi, $contents);
+            DB::table('materis')->insert([
+                'title' =>  $title[$i],
+                'slug' => Str::slug($title[$i], '-'),
+                'content' => $materi,
+                'topik_id' => (int) ($i / 3) + 1,
+            ]);
+        }
     }
 }
