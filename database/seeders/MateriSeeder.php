@@ -21,7 +21,7 @@ class MateriSeeder extends Seeder
         $contents = file_get_contents($url);
 
         $materi = Hash::make(substr($url, strrpos($url, '/') + 1));
-        $materi = hash('sha256', $materi) . '.png';
+        $materi = hash('sha256', $materi) . '.pdf';
         Storage::put('\public\questions\\' . $materi, $contents);
         DB::table('materis')->insert([
             'title' => 'Keliling Segitiga',
@@ -31,7 +31,7 @@ class MateriSeeder extends Seeder
         ]);
 
         $materi = Hash::make(substr($url, strrpos($url, '/') + 1));
-        $materi = hash('sha256', $materi) . '.png';
+        $materi = hash('sha256', $materi) . '.pdf';
         Storage::put('\public\questions\\' . $materi, $contents);
         DB::table('materis')->insert([
             'title' => 'Keliling Persegi',
@@ -41,7 +41,7 @@ class MateriSeeder extends Seeder
         ]);
 
         $materi = Hash::make(substr($url, strrpos($url, '/') + 1));
-        $materi = hash('sha256', $materi) . '.png';
+        $materi = hash('sha256', $materi) . '.pdf';
         Storage::put('\public\questions\\' . $materi, $contents);
         DB::table('materis')->insert([
             'title' => 'Keliling Persegi Panjang',
@@ -51,7 +51,7 @@ class MateriSeeder extends Seeder
         ]);
 
         $materi = Hash::make(substr($url, strrpos($url, '/') + 1));
-        $materi = hash('sha256', $materi) . '.png';
+        $materi = hash('sha256', $materi) . '.pdf';
         Storage::put('\public\questions\\' . $materi, $contents);
         DB::table('materis')->insert([
             'title' => 'Luas Segitiga',
@@ -61,7 +61,7 @@ class MateriSeeder extends Seeder
         ]);
 
         $materi = Hash::make(substr($url, strrpos($url, '/') + 1));
-        $materi = hash('sha256', $materi) . '.png';
+        $materi = hash('sha256', $materi) . '.pdf';
         Storage::put('\public\questions\\' . $materi, $contents);
         DB::table('materis')->insert([
             'title' => 'Luas Persegi',
@@ -71,7 +71,7 @@ class MateriSeeder extends Seeder
         ]);
 
         $materi = Hash::make(substr($url, strrpos($url, '/') + 1));
-        $materi = hash('sha256', $materi) . '.png';
+        $materi = hash('sha256', $materi) . '.pdf';
         Storage::put('\public\questions\\' . $materi, $contents);
         DB::table('materis')->insert([
             'title' => 'Luas Persegi Panjang',
@@ -81,7 +81,7 @@ class MateriSeeder extends Seeder
         ]);
 
         $materi = Hash::make(substr($url, strrpos($url, '/') + 1));
-        $materi = hash('sha256', $materi) . '.png';
+        $materi = hash('sha256', $materi) . '.pdf';
         Storage::put('\public\questions\\' . $materi, $contents);
         DB::table('materis')->insert([
             'title' => 'Volume Kubus',
@@ -91,7 +91,7 @@ class MateriSeeder extends Seeder
         ]);
 
         $materi = Hash::make(substr($url, strrpos($url, '/') + 1));
-        $materi = hash('sha256', $materi) . '.png';
+        $materi = hash('sha256', $materi) . '.pdf';
         Storage::put('\public\questions\\' . $materi, $contents);
         DB::table('materis')->insert([
             'title' => 'Volume Balok',
@@ -101,7 +101,7 @@ class MateriSeeder extends Seeder
         ]);
 
         $materi = Hash::make(substr($url, strrpos($url, '/') + 1));
-        $materi = hash('sha256', $materi) . '.png';
+        $materi = hash('sha256', $materi) . '.pdf';
         Storage::put('\public\questions\\' . $materi, $contents);
         DB::table('materis')->insert([
             'title' => 'Volume Bola',
