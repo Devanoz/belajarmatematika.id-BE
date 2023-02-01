@@ -154,11 +154,11 @@ class QuestionController extends Controller
             'is_pilihan_ganda'  => 'required|boolean',
             'challenge_id'      => 'required|exists:challenges,id',
         ]);
-
+        
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-
+        
         //check image store
         if ($request->file('image')) {
         
@@ -191,8 +191,6 @@ class QuestionController extends Controller
             ]);
         }
         
-        $option = [];
-
         if($request->is_pilihan_ganda){
             $validator = Validator::make($request->all(), [
                 'A'       => 'required',
@@ -205,22 +203,39 @@ class QuestionController extends Controller
                 return response()->json($validator->errors(), 422);
             }
 
-            //create Option
-            $option = Option::where('question_id', $question->id)->update([
-                'A'       => $request->A,
-                'B'       => $request->B,
-                'C'       => $request->C,
-                'D'       => $request->D,
-                'question_id'   => $question->id,
-            ]);
+            //check Option
+            $option = Option::where('question_id', $question->id)->first();
+            if($option){
+                //update Option
+                $option = $option->update([
+                    'A'       => $request->A,
+                    'B'       => $request->B,
+                    'C'       => $request->C,
+                    'D'       => $request->D,
+                    'question_id'   => $question->id,
+                ]);
+            }else{
+                //create Option
+                $option = Option::create([
+                    'A'       => $request->A,
+                    'B'       => $request->B,
+                    'C'       => $request->C,
+                    'D'       => $request->D,
+                    'question_id'   => $question->id,
+                ]);
+            }
 
             if(! $option) {
                 //return failed with Api Resource
-                return new OptionResource(false, 'Data Option Berhasil Diupdate!', null);
+                return new OptionResource(false, 'Data Option Gagal Diupdate!', null);
             }
-        }
 
-        $question->options = $option;
+            $question->options = $option;
+        }else{
+            $option = Option::where('question_id', $question->id)->delete();
+            $option = [];
+            $question->options = $option;
+        }
 
         if($question) {
             //return success with Api Resource
