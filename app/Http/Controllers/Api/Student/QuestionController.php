@@ -20,10 +20,11 @@ class QuestionController extends Controller
     public function index()
     {
         $challenge = Challenge::whereId(request()->challenge_id)->with('materi')->first();
-        $questions = Question::with('options')
+        $questions = Question::where('challenge_id', request()->challenge_id)
+        ->with('options')
         ->with(['studentAnswers' => function ($studentAnswer){
             $studentAnswer->where('student_id', auth()->guard('api_student')->user()->id);
-        }])->where('challenge_id', request()->challenge_id)
+        }])
         ->oldest();
 
         $studentChallenge = StudentChallenge::where('student_id', auth()->guard('api_student')->user()->id)->where('challenge_id', request()->challenge_id)->first();
