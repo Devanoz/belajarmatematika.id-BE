@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OptionResource;
 use App\Http\Resources\QuestionResource;
+use App\Models\Challenge;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -253,8 +254,15 @@ class QuestionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Question $question)
-    {
-        //remove image
+    {   
+        if(Challenge::whereId($question->challenge_id)->first()->is_published == true){
+           return response()->json([
+                'success' => false,
+                'message' => 'Forbidden'
+            ], 403);
+        }
+
+        // remove image
         Storage::disk('local')->delete('public/questions/'.basename($question->image));
 
         if(Option::where('question_id', $question->id)->delete() && $question->delete()) {

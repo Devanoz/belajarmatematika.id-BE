@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers\Api\Student;
 
-use App\Models\Student;
 use App\Models\StudentChallenge;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\StudentChallengeResource;
 use App\Models\Challenge;
 use App\Models\Question;

@@ -16,9 +16,13 @@ class Question extends Model
     public function options(){
         return $this->hasMany(Option::class);
     }
-
+    
     public function studentAnswers(){
         return $this->hasMany(StudentAnswer::class);
+    }
+    
+    public function chalenge(){
+        return $this->belongsTo(Chalenge::class);
     }
 
     /**

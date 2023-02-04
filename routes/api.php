@@ -67,6 +67,9 @@ Route::prefix('teacher')->group(function () {
         
         //teacher
         Route::apiResource('/teachers', App\Http\Controllers\Api\Teacher\TeacherController::class, ['except' => ['show', 'update', 'create', 'edit'], 'as' => 'teacher']);
+        
+        //student
+        Route::apiResource('/students', App\Http\Controllers\Api\Teacher\StudentController::class, ['except' => ['store', 'show', 'update', 'create', 'edit'], 'as' => 'teacher']);
     
     });
 

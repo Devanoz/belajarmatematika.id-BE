@@ -20,7 +20,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        if(auth()->guard('api_teacher')->user()->role == 'teacher'){
+        if(auth()->guard('api_teacher')->user()->role != 'admin'){
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized'
@@ -86,7 +86,7 @@ class TeacherController extends Controller
      */
     public function destroy(Teacher $teacher)
     {
-        if(auth()->guard('api_teacher')->user()->role == 'teacher'){
+        if(auth()->guard('api_teacher')->user()->role != 'admin'){
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized'
