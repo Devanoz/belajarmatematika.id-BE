@@ -148,6 +148,13 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
+        if(Challenge::whereId($question->challenge_id)->first()->is_published == true){
+           return response()->json([
+                'success' => false,
+                'message' => 'Forbidden'
+            ], 403);
+        }
+        
         $validator = Validator::make($request->all(), [
             'title'             => 'required',
             'image'             => 'image|mimes:jpeg,jpg,png|max:2000',
