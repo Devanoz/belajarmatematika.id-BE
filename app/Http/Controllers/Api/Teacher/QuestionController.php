@@ -272,9 +272,7 @@ class QuestionController extends Controller
         // remove image
         Storage::disk('local')->delete('public/questions/'.basename($question->image));
 
-        $question_id = $question->id;
         if($question->delete()) {
-            Option::where('question_id', $question_id)->delete();
             //return success with Api Resource
             return new QuestionResource(true, 'Data Question Berhasil Dihapus!', null);
         }
