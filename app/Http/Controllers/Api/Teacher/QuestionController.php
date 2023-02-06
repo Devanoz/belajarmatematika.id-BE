@@ -154,7 +154,7 @@ class QuestionController extends Controller
                 'message' => 'Forbidden'
             ], 403);
         }
-        
+
         $validator = Validator::make($request->all(), [
             'title'             => 'required',
             'image'             => 'image|mimes:jpeg,jpg,png|max:2000',
@@ -272,7 +272,9 @@ class QuestionController extends Controller
         // remove image
         Storage::disk('local')->delete('public/questions/'.basename($question->image));
 
-        if(Option::where('question_id', $question->id)->delete() && $question->delete()) {
+        $question_id = $question->id;
+        if($question->delete()) {
+            Option::where('question_id', $question_id)->delete();
             //return success with Api Resource
             return new QuestionResource(true, 'Data Question Berhasil Dihapus!', null);
         }
